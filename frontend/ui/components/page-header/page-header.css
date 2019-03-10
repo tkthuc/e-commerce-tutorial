@@ -1,0 +1,76 @@
+.site-header {
+  position: sticky;
+  top: 0;
+  background-color: white;
+}
+
+.navbar {
+  background: darkblue;
+  color: white;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+
+.logo {
+  text-decoration: none;
+  color: white;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.site-nav {
+  ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  a {
+    text-transform: uppercase;
+    text-decoration: none;
+    color: azure;
+    padding: 20px;
+    display: inline-block;
+    cursor: pointer;
+  }
+  .active {
+    a {
+      font-weight: bold;
+      color: #62DEBE;
+      background: color(#62DEBE shade(40%))
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    flex-wrap: wrap;
+  }
+  .site-nav {
+    order: 2;
+    background: #333;
+    width: 100%;
+  }
+}
+
+.account-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.account-dropdown {
+  margin-right: 10px ;
+  ul {
+    display: none;
+  }
+}
+
+.sign-out-link {
+  color:  #62DEBE;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}

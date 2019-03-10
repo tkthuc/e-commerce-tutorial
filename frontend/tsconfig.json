@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "outDir": "./public",
+    "module": "commonjs",
+    "target": "es5",
+    "jsx": "react",
+    "lib":["es6","dom"],
+    "rootDirs": ["ui"]
+  }
+}
