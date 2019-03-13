@@ -1,0 +1,98 @@
+:root {
+  --height: 50%
+}
+
+.product-page {
+    width: 100%;
+    margin: 2em;
+    display: flex;
+    flex-direction: row;
+
+    .product-details {
+      padding: 10px;
+      height: var(--height);
+      flex: 2;
+      background: azure;
+
+      & > * {
+         margin-bottom: 10px;
+      }
+
+      h2 {
+        margin-block-end:5px;
+      }
+
+      input {
+        border: none;
+        background: none;
+        width: 3em;
+      }
+
+      input:focus {
+        outline-width: 0;
+      }
+
+
+      .quantity-input-box {
+        display:flex;
+        flex-direction: row;
+        align-items: center;
+        border: 0.5px solid;
+        border-left: 0px;
+      }
+
+      .quantity-form {
+        display:flex;
+        flex-direction: row;
+        align-items: stretch;
+        height: 2em;
+
+        & > div:first-child > label {
+          border: 0.5px solid;
+          border-right: 0px;
+          padding: 5px;
+          display: flex;
+          align-items: center;
+          background: blanchedalmond;
+        }
+
+
+        button {
+          height: 100%;
+          margin-left: 5px;
+        }
+
+      }
+
+      .up-down-buttons {
+        display:flex;
+        flex-direction: column;
+        width: 10px;
+
+        .top {
+          flex: 1;
+        }
+
+        .down {
+          flex: 1;
+        }
+      }
+
+
+    }
+
+    .product-image {
+      flex: 1;
+      background-color: cornsilk;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+
+
+
+
+
+}

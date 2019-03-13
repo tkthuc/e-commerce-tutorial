@@ -6,6 +6,10 @@
     "target": "es5",
     "jsx": "react",
     "lib":["es6","dom"],
-    "rootDirs": ["ui"]
+    "rootDirs": ["ui"],
+    "baseUrl": "./",
+    "paths": {
+      "components" : ["./components"]
+    }
   }
 }

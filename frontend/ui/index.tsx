@@ -2,14 +2,15 @@ import * as  React from 'react';
 import * as ReactDOM from 'react-dom';
 
 import * as ES6Promise from "es6-promise";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, HashRouter } from "react-router-dom";
 
 ES6Promise.polyfill();
 
 import App from './containers/App';
 
 ReactDOM.render(
-    <BrowserRouter>
+    // should use BrowserRouter for better SEO and history object of HTML5
+    <HashRouter>
         <App/>
-    </BrowserRouter> ,
+    </HashRouter> ,
     document.getElementById("container"));

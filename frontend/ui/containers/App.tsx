@@ -1,41 +1,31 @@
-
 import * as React from 'react';
 
-import { BookServices } from "../api/bookServices";
-import ProductBox from '../components/product-box/product-box';
+import {Route, Switch} from 'react-router-dom';
 import PageHeader from '../components/page-header';
 
+import Home from './Home';
+import Product from './Product';
+
 import './App.css';
-import {Book} from "../common/interfaces";
 
 
-export default class App extends React.Component<any,{books: Book[]}>{
+export default class App extends React.Component{
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            books: []
-        }
-    }
 
-    async componentDidMount() {
-        let books: Book[] = BookServices.getAllBooks();
-        this.setState({
-            books
-        });
-    }
 
     render() {
         return (
             <div className="App">
                 <PageHeader/>
-                <div className="App-content">
-                    {
-                        this.state.books.map(
-                            (product,index) => <ProductBox key={index} productName={product.name} price={product.price} quantity={1}/>
-                        )
-                    }
-                </div>
+
+
+
+
+                <Switch>
+                    <Route exact path="/" component={Home}></Route>
+                    <Route path="/product/:id" component={Product}></Route>
+                </Switch>
+
 
             </div>
         );

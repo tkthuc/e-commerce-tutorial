@@ -1,11 +1,17 @@
 import * as React from 'react';
 
+import { Link } from 'react-router-dom';
+
 import './product-box.css';
+
+
 
 type Props = {
     quantity: number,
     productName: string,
-    price: number
+    price: number,
+    description ?:string,
+    openProduct ?: Function
 }
 
 type State = {
@@ -29,15 +35,20 @@ export default class ProductBox extends React.Component<Props,  Readonly<State>>
         })
     }
 
+    openProduct() {
+        this.props.openProduct ? this.props.openProduct(this.props.productName) :null ;
+    }
+
 
     render() {
         return (
             <div className="product-box">
                 <div className="header"> {this.props.productName} </div>
                 <div className="content">
-                    <div className="product-url">
-                        200x100
-                    </div>
+                    <a onClick={ this.openProduct.bind(this)  } className="product-url">
+                            200x100
+                    </a>
+
                     <div> {this.props.price} </div>
                     <div className="product-box-bottom">
                         <div className="quantity"> <input onChange={this.updateQuantity.bind(this)} value={this.state.quantity} type="text"></input> </div>
