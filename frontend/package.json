@@ -10,6 +10,7 @@
     "@storybook/cli": "5.0.0",
     "@types/react": "16.7.20",
     "autoprefixer": "9.4.5",
+    "axios": "0.18.0",
     "es6-promise": "4.2.6",
     "font-awesome": "4.7.0",
     "init": "0.1.2",

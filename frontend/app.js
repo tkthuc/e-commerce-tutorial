@@ -6,7 +6,7 @@ var logger = require('morgan');
 
 
 var indexRouter = require('./routes/index');
-
+var productRouter = require('./routes/product');
 
 var app = express();
 
@@ -18,6 +18,9 @@ app.use(cookieParser());
 
 app.set('view engine', 'ejs'); // set up ejs for templating
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+app.use('/products', productRouter);
 
 app.use('/', indexRouter);
 

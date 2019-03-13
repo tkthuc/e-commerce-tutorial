@@ -1,11 +1,10 @@
 import * as React from 'react';
 import ProductBox from "../components/product-box/product-box";
-import ProductPage from "../components/product-page";
 
 import {Book} from "../common/interfaces";
 import {BookServices} from "../api/bookServices";
 
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import {Route} from 'react-router-dom';
 
 
 export default class Home extends React.Component<{history: any},{books: Book[], [key:string]:any}> {
@@ -19,10 +18,14 @@ export default class Home extends React.Component<{history: any},{books: Book[],
     }
 
     async componentDidMount() {
-        let books: Book[] = BookServices.getAllBooks();
-        this.setState({
-            books
-        });
+        try {
+            let books = await BookServices.getAllBooks();
+            this.setState({
+                books: books.data
+            });
+        }catch (e) {
+            throw Error("Failed to retrieve all books");
+        }
     }
 
     openProduct(product: Book) {

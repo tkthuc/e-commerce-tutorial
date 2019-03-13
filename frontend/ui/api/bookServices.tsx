@@ -1,21 +1,23 @@
 import * as React from 'react';
+import axios from 'axios';
 
+import { Book } from '../common/interfaces';
 import IBookServices from './IBookServices';
+
+
+
 
 export const BookServices : IBookServices  ={
 
     getAllBooks() {
-        return Array.from({length: 1000}, (v, k) => k+1).map(
-            (val,index) => {
-                 return {
-                     id: index,
-                     name: `Harry Potter ${index}`,
-                     quantity: 1,
-                     price: 1000,
-                     authors: ["JK Rowling"]
-                 }
-             }
-        );
+        return axios.get("/products") as any;
+    },
+
+    getBookById(id:string)  {
+        return axios.get(`/products/${id}`) as any;
     }
+
+
+
 
 }
