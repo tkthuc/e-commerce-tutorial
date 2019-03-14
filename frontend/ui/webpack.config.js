@@ -4,9 +4,9 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
     mode: "development",
-    entry: "./ui/index.tsx",
+    entry: "./index.tsx",
     output: {
-        path: path.resolve(__dirname, "public"),
+        path: path.resolve(__dirname, "../public"),
         filename: "[name].bundle.js",
     },
     resolve: {
@@ -48,7 +48,7 @@ module.exports = {
     },
     plugins: [
         new htmlWebpackPlugin({
-            template: "./ui/index.html"
+            template: "./index.html"
         }),
         new MiniCssExtractPlugin({
             // Options similar to the same options in webpackOptions.output

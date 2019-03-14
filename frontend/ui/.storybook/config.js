@@ -2,7 +2,7 @@ import { configure, addDecorator } from '@storybook/react';
 
 import StoryRouter from 'storybook-router';
 
-const req = require.context('../ui/stories', true, /.tsx$/);
+const req = require.context('../stories', true, /.tsx$/);
 
 
 addDecorator(StoryRouter());

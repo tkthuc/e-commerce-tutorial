@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "sourceMap": true,
-    "outDir": "./public",
+    "outDir": "../public",
     "module": "commonjs",
     "target": "es5",
     "jsx": "react",
