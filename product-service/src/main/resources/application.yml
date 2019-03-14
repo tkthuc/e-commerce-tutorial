@@ -3,3 +3,5 @@ spring:
     mongodb:
       port: 27017
       host: mongodb
+  application:
+    name: product-service
