@@ -16,13 +16,34 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.set('view engine', 'ejs'); // set up ejs for templating
-app.use(express.static(path.join(__dirname, 'public')));
 
+
+
+app.set('views', path.join(__dirname, './public'));
+
+
+app.use(express.static(path.join(__dirname, './public')));
 
 app.use('/products', productRouter);
 
-app.use('/', indexRouter);
+app.use('*',indexRouter);
+
+// app.get('/',(req,res,next) => {
+//     res.redirect("e-commerce");
+// });
+
+//
+//
+// app.get('/e-commerce/product/*(?<!(css|js|map|woff|ttf))$',(req,res) => {
+//   res.sendFile(path.join(__dirname, './public','index.html'));
+// });
+//
+// app.get('/e-commerce/product/:filename$',(req,res) => {
+//     res.sendFile(path.join(__dirname, './public',req.params.filename));
+// })
+
+
+
 
 
 // catch 404 and forward to error handler

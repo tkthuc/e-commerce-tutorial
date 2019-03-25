@@ -1,6 +1,7 @@
 const path = require('path');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const AsyncChunkNames = require('webpack-async-chunk-names-plugin');
 
 module.exports = {
     mode: "development",
@@ -8,6 +9,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, "../public"),
         filename: "[name].bundle.js",
+        chunkFilename: '[name].js'
     },
     resolve: {
         // Add `.ts` and `.tsx` as a resolvable extension.
@@ -55,17 +57,27 @@ module.exports = {
             // both options are optional
             filename: "[name].css",
             chunkFilename: "[id].css"
-        })
+        }),
+        new AsyncChunkNames()
     ],
     devtool: "source-map",
     optimization: {
         splitChunks: {
             cacheGroups: {
+                default:false,
                 vendor: {
                     test: /node_modules/,
                     chunks: "initial",
                     name: "vendor",
                     priority: 10,
+                    enforce: true
+                },
+                common: {
+                    name: 'common',
+                    minChunks: 2,
+                    chunks: 'all',
+                    priority: 10,
+                    reuseExistingChunk: true,
                     enforce: true
                 }
             }
