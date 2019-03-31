@@ -1,7 +1,5 @@
 import * as React from 'react';
 
-import 'font-awesome/css/font-awesome.css';
-
 import './product-page.css';
 
 export interface IProductProps {

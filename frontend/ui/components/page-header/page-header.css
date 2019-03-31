@@ -5,7 +5,7 @@
 }
 
 .navbar {
-  background: darkblue;
+  background: aquamarine;
   color: white;
   display: flex;
   align-items: center;
@@ -15,13 +15,13 @@
 
 .logo {
   text-decoration: none;
-  color: white;
+  color: black;
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 3px;
 }
 
-.site-nav {
+.nav-options {
   ul {
     display: flex;
     list-style: none;
@@ -31,7 +31,7 @@
   a {
     text-transform: uppercase;
     text-decoration: none;
-    color: azure;
+    color: black;
     padding: 20px;
     display: inline-block;
     cursor: pointer;
@@ -49,9 +49,8 @@
   .navbar {
     flex-wrap: wrap;
   }
-  .site-nav {
+  .nav-options {
     order: 2;
-    background: #333;
     width: 100%;
   }
 }
@@ -59,15 +58,45 @@
 .account-actions {
   margin-left: auto;
   display: flex;
-  align-items: center;
+  width: 15%;
+  min-width: 50px;
+  position: relative;
+  justify-content: flex-end;
+  margin-right: 10px;
+
+  & > i:hover {
+    cursor: pointer;
+  }
+
+  ul {
+    visibility: hidden;
+    position: absolute;
+    margin-top: 1rem;
+    top: 0.5rem;
+    left: 0px;
+    right: 0px;
+    list-style: none;
+    padding: 5px;
+    background: darkblue;
+    transition: all 0.2s ease;
+  }
+
+  i:hover ~ ul, & ul:hover {
+    visibility: visible;
+    display: block;
+    li {
+      cursor: pointer;
+    }
+
+  }
 }
 
 .account-dropdown {
   margin-right: 10px ;
-  ul {
-    display: none;
-  }
+  display: block;
 }
+
+
 
 .sign-out-link {
   color:  #62DEBE;
