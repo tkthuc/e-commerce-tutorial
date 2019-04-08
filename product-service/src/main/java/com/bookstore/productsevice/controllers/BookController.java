@@ -30,8 +30,8 @@ public class BookController {
     @Autowired
     public StorageService storageService;
 
-    @GetMapping("/products/{name}")
-    public ResponseEntity<List<Book>> getBooksByName(@PathVariable String name) {
+    @GetMapping(value = "/products", params = "name")
+    public ResponseEntity<List<Book>> getBooksByName(@RequestParam String name) {
         List<Book> books = bookRepository.findAllByName(name);
         if(books.isEmpty()) {
             throw new ItemNotFoundException(name);
@@ -52,20 +52,7 @@ public class BookController {
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
-    @GetMapping("/products/image/{filename:.+}")
-    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
-        Resource file = storageService.loadAsResource(filename);
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,"attachment;filename=\""+file.getFilename()+"\"").body(file);
-    }
-
-    @PostMapping("/products/image")
-    public ResponseEntity<String> handleFileUpdload(@RequestParam("file")MultipartFile file, RedirectAttributes redirectAttributes) {
-        String filename = storageService.store(file);
-        redirectAttributes.addFlashAttribute("message", String.join("You successfully uploaded "+file.getOriginalFilename()));
-        return ResponseEntity.ok().body(filename);
-    }
-
-    @GetMapping("/product/{id}")
+    @GetMapping("/products/{id}")
     public ResponseEntity<Book> getBookById(@PathVariable String id) {
         Book book = bookRepository.findById(id).orElseThrow(() -> new ItemNotFoundException(id));
         return new ResponseEntity<>(book, HttpStatus.OK);

@@ -4,6 +4,8 @@ services:
     image: product-service
     ports:
       - "8080:8080"
+    environment:
+      - spring.cloud.consul.enabled=true
     depends_on:
       - mongodb
   mongodb:
@@ -11,7 +13,7 @@ services:
     ports:
       - "27017:27017"
   consul:
-    image: consul:0.7.4
+    image: consul:1.4.3
     hostname: consul
     environment:
       SERVICE_TAGS: dev,consul,consul_tag

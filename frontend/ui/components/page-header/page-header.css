@@ -1,3 +1,7 @@
+:root {
+    --sign-out-margin-right: 10px;
+}
+
 .site-header {
   position: sticky;
   top: 0;
@@ -58,11 +62,9 @@
 .account-actions {
   margin-left: auto;
   display: flex;
-  width: 15%;
   min-width: 50px;
   position: relative;
-  justify-content: flex-end;
-  margin-right: 10px;
+  margin-right: var(--sign-out-margin-right);
 
   & > i:hover {
     cursor: pointer;
@@ -74,7 +76,7 @@
     margin-top: 1rem;
     top: 0.5rem;
     left: 0px;
-    right: 0px;
+    right: calc(var(--sign-out-margin-right) * -1);
     list-style: none;
     padding: 5px;
     background: darkblue;

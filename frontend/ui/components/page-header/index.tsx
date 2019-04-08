@@ -27,11 +27,11 @@ export default function(props) {
                         </ul>
                     </div>
                     <div className="account-actions">
-                        <i className="fa fa-cog account-dropdown">
+                        <i className="fa fa-globe account-dropdown">
                         </i>
                         <a href="#0" className="sign-out-link">Sign Out</a>
                         <ul>
-                            <li> Your Account</li>
+                            <li> English </li>
                         </ul>
                     </div>
                 </nav>
@@ -47,7 +47,7 @@ export default function(props) {
 
 
                     <input className="search-input" type="text" name="search_input"/>
-                    <button className="search-right">Search</button>
+                    <button>Search</button>
                 </form>
             </header>
         );

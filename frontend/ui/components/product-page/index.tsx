@@ -34,7 +34,7 @@ export default function(props : IProductProps) {
 
                 <form className="quantity-form">
                     <div style={style}>
-                        <label> Quantity </label>
+                        <span> Quantity </span>
                         <div className="quantity-input-box">
                             <input name="quantity"></input>
                             <span className="up-down-buttons">

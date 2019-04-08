@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "storybook": "start-storybook -p 9001 -c .storybook",
+    "storybook": "cd ./ui && npm run storybook",
     "webpack": "cd ./ui && webpack --watch",
+    "build": "cd ./ui && webpack",
     "dev-start": "nodemon ./bin/www"
   },
   "dependencies": {
