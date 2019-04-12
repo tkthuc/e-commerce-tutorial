@@ -28,28 +28,12 @@ app.use('/products', productRouter);
 
 app.use('*',indexRouter);
 
-// app.get('/',(req,res,next) => {
-//     res.redirect("e-commerce");
-// });
-
-//
-//
-// app.get('/e-commerce/product/*(?<!(css|js|map|woff|ttf))$',(req,res) => {
-//   res.sendFile(path.join(__dirname, './public','index.html'));
-// });
-//
-// app.get('/e-commerce/product/:filename$',(req,res) => {
-//     res.sendFile(path.join(__dirname, './public',req.params.filename));
-// })
-
-
-
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
 
 // error handler
 app.use(function(err, req, res, next) {

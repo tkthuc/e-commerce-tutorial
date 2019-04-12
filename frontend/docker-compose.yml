@@ -4,14 +4,19 @@ services:
     image: frontend
     ports:
     - "3000:3000"
+    environment:
+    - NODE_ENV=production
     depends_on:
       - product-service
   product-service:
     image: product-service
+    environment:
+    - spring.cloud.consul.enabled=true
     ports:
     - "8080:8080"
     depends_on:
     - mongodb
+    - consul
 
   mongodb:
     image: mongo
@@ -19,7 +24,7 @@ services:
     - "27017:27017"
 
   consul:
-    image: consul:0.7.4
+    image: consul:1.4.3
     hostname: consul
     environment:
       SERVICE_TAGS: dev,consul,consul_tag

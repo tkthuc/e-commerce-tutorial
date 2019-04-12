@@ -7,20 +7,26 @@
     "storybook": "cd ./ui && npm run storybook",
     "webpack": "cd ./ui && webpack --watch",
     "build": "cd ./ui && webpack",
-    "dev-start": "nodemon ./bin/www"
+    "dev-start": "nodemon --inspect-brk=0.0.0.0:9229 ./bin/www"
   },
   "dependencies": {
+    "axios": "0.18.0",
+    "consul": "0.34.1",
+    "cookie-parser": "1.4.4",
     "debug": "~2.6.9",
     "ejs": "~2.5.7",
     "express": "~4.16.0",
-    "morgan": "~1.9.0",
-    "cookie-parser": "1.4.4"
+    "morgan": "~1.9.0"
   },
   "devDependencies": {
     "nodemon": "1.18.10"
   },
   "nodemonConfig": {
-    "ignore": ["public/*", "ui/*","node_modules/*"],
+    "ignore": [
+      "public/*",
+      "ui/*",
+      "node_modules/*"
+    ],
     "delay": "2500"
   }
 }

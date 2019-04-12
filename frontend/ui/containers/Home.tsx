@@ -29,7 +29,7 @@ export default class Home extends React.Component<{history: any},{books: Book[],
     }
 
     openProduct(product: Book) {
-        this.props.history.push(`/product/${product.name}`);
+        this.props.history.push(`/product/${product.id}`);
     }
 
 

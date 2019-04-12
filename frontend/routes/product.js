@@ -1,31 +1,40 @@
 var express = require('express');
 var router = express.Router();
+var axios = require('axios');
 
-router.get('/', function(req, res, next){
-    res.send(Array.from({length: 1000}, (v, k) => k+1).map(
-        (val,index) => {
-            return {
-                id: index,
-                name: `Harry Potter ${index}`,
-                quantity: 1,
-                price: 1000,
-                authors: ["JK Rowling"]
-            }
-        }
-    ));
+
+// if(process.env.NODE_ENV == 'development') {
+//     axios.defaults.baseURL = 'http://localhost:8080';
+// } else {
+//     axios.defaults.baseURL = 'http://product-service:8080';
+// }
+
+
+var endpoints = require('../consul/serviceLocation');
+
+
+
+
+
+router.get('/', async function(req, res, next){
+    try {
+        let listOfProducts = await axios.get(`${endpoints.getServiceLocationPath('product-service')}/products`);
+        res.send(listOfProducts.data);
+    } catch (e) {
+        next(e);
+    }
 });
 
-router.get('/:name', (req, res, next) => {
-    res.send(
-        {
-            id: 1,
-            name: `Harry Potter ${req.params.name}`,
-            quantity: 1,
-            price: 1000,
-            authors: ["JK Rowling"],
-            description: "This is a book about a boy wizard fighting the evils in magical world"
-        }
-    );
+
+router.get('/:id', async (req, res, next) => {
+
+    try {
+        let response = await axios.get(`${endpoints.getServiceLocationPath('product-service')}/products/${req.params.id}`);
+        res.send(response.data);
+    } catch (e) {
+        next(e);
+    }
+
 });
 
 module.exports = router;

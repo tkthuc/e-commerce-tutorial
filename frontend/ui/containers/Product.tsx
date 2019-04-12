@@ -23,7 +23,7 @@ export default class Product extends React.Component<any,any> {
 
     render() {
         return (
-            <ProductPage quantity={this.state.book.quantity} name={this.state.book.name} price={this.state.book.price} description={this.state.book.description}/>
+            <ProductPage {...this.state.book}/>
         );
     }
 }

@@ -5,3 +5,10 @@ spring:
       host: mongodb
   application:
     name: product-service
+
+
+logging:
+  level:
+    org.springframework.cloud.consul: INFO
+server:
+  port: 8080

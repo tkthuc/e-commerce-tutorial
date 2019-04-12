@@ -4,7 +4,7 @@ import './product-page.css';
 
 export interface IProductProps {
     name: string,
-    price: number,
+    priceUsd: number,
     description?: string,
     quantity?: number
 }
@@ -20,7 +20,7 @@ export default function(props : IProductProps) {
             <div className="product-details">
                 <div>
                     <h2> {props.name} </h2>
-                    <div> USD {props.price} </div>
+                    <div> USD {props.priceUsd} </div>
                 </div>
 
                 <hr/>

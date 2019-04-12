@@ -16,7 +16,7 @@ storiesOf('Button', module)
         <ProductBox quantity={1} price={1000} productName={"Story Book"} ></ProductBox>
     ))
     .add('product page', () => (
-        <ProductPage name={"Vintage Typewriter"} price={20} description={"This typewriter looks good in your living room."} />
+        <ProductPage name={"Vintage Typewriter"} priceUsd={20} description={"This typewriter looks good in your living room."} />
     ))
     .add('login-page', () => (
         <LoginPage></LoginPage>
