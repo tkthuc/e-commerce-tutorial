@@ -27,21 +27,35 @@ public class BookServiceApplication {
         return new CommandLineRunner() {
             @Override
             public void run(String... args) throws Exception {
-                Book bookA = new Book.Builder().setName("Lord of the Rings").setAuthors(new String[]{"John Doo"}).setPriceUsd(100).setCategories(new String[]{"fiction"}).build();
+                Book bookA = new Book.Builder().setName("Lord of the Rings")
+                        .setAuthors(new String[]{"John Doo"})
+                        .setPriceUsd(100)
+                        .setDescription("Great adventures of little hobbit")
+                        .setCategories(new String[]{"fiction"}).build();
                 repository.findAllByName(bookA.getName()).forEach(
                         book -> {
                             repository.delete(book);
                         }
                 );
                 repository.save(bookA);
-                Book bookB = new Book.Builder().setName("God Father").setAuthors(new String[]{"Mario Puzo"}).setPriceUsd(150).setCategories(new String[]{"fiction"}).build();
+                Book bookB = new Book.Builder()
+                        .setName("God Father")
+                        .setAuthors(new String[]{"Mario Puzo"})
+                        .setPriceUsd(150)
+                        .setDescription("The tragic life of the mafia bosses")
+                        .setCategories(new String[]{"fiction"}).build();
                 repository.findAllByName(bookB.getName()).forEach(
                         book -> {
                             repository.delete(book);
                         }
                 );
                 repository.save(bookB);
-                Book bookC = new Book.Builder().setName("Art of Wars").setAuthors(new String[]{"Sun Zhu"}).setPriceUsd(40.5).setCategories(new String[]{"non-fiction"}).build();
+                Book bookC = new Book.Builder()
+                        .setName("Art of Wars")
+                        .setAuthors(new String[]{"Sun Zhu"})
+                        .setDescription("How to create wars and win them")
+                        .setPriceUsd(40.5)
+                        .setCategories(new String[]{"non-fiction"}).build();
                 repository.findAllByName(bookC.getName()).forEach(
                         book -> {
                             repository.delete(book);
