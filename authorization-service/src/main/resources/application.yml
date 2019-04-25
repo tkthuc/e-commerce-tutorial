@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: "authorization-service"
+  data:
+    mongodb:
+      port: ${spring.authorization.mongo.port:27017}
+      database: user
+server:
+  port: 8080
