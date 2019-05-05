@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import './product-box.css';
 
-
+import {Card, Image} from 'semantic-ui-react';
 
 type Props = {
     quantity: number,
@@ -42,25 +42,26 @@ export default class ProductBox extends React.Component<Props,  Readonly<State>>
 
     render() {
         return (
-            <div className="product-box">
-                <div className="header"> {this.props.productName} </div>
-                <div className="content">
-                    <a onClick={ this.openProduct.bind(this)  } className="product-url">
-                            200x100
-                    </a>
 
-                    <div> {this.props.price} </div>
-                    <div className="product-box-bottom">
-                        <div className="quantity"> <input onChange={this.updateQuantity.bind(this)} value={this.state.quantity} type="text"></input> </div>
+            <Card className="product-box">
+                <Image onClick={this.openProduct.bind(this)} className="item-image"/>
+                <Card.Content>
+                    <Card.Header>{this.props.productName}</Card.Header>
+                    <Card.Description>{this.props.description}</Card.Description>
+                </Card.Content>
+                <Card.Content extra>
+                    <div className="item-quantity">
+                        <div className="quantity">
+                            <input onChange={this.updateQuantity.bind(this)} value={this.state.quantity} type="text"></input>
+                        </div>
                         <div className="button">
-                            <button>
+                                <button>
                                 Add to cart
-                            </button>
+                                </button>
                         </div>
                     </div>
-                </div>
-
-            </div>
+                </Card.Content>
+            </Card>
         );
 
     }

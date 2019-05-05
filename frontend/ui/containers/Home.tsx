@@ -35,10 +35,10 @@ export default class Home extends React.Component<{history: any},{books: Book[],
 
     render() {
         return (
-            <div className="App-content">
+            <div className="App-content ui cards">
             {
                 this.state.books.map(
-                    (product,index) => <ProductBox key={index} productName={product.name} price={product.price} quantity={1} openProduct={() => this.openProduct(product)}/>
+                    (product,index) => <ProductBox key={index} description={product.description} productName={product.name} price={product.price} quantity={1} openProduct={() => this.openProduct(product)}/>
                 )
             }
             </div>

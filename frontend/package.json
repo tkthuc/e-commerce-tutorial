@@ -3,11 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "set NODE_ENV=production &&  node ./bin/www",
     "storybook": "cd ./ui && npm run storybook",
     "webpack": "cd ./ui && webpack --watch",
     "build": "cd ./ui && webpack",
-    "dev-start": "nodemon --inspect-brk=0.0.0.0:9229 ./bin/www"
+    "dev-start": "set NODE_ENV=development && nodemon --inspect-brk=0.0.0.0:9229 ./bin/www",
+    "debug-production": "NODE_ENV=production nodemon --inspect-brk=0.0.0.0:9229 ./bin/www"
   },
   "dependencies": {
     "axios": "0.18.0",

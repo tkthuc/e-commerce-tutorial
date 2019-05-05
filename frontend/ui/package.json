@@ -8,18 +8,19 @@
   },
   "dependencies": {
     "axios": "0.18.0",
-    "bootstrap": "4.3.1",
+    "babel-polyfill": "6.26.0",
     "es6-promise": "4.2.6",
     "font-awesome": "4.7.0",
     "init": "0.1.2",
     "react": "16.8.3",
-    "react-bootstrap": "1.0.0-beta.6",
     "react-dom": "16.8.3",
     "react-loadable": "5.5.0",
     "react-redux": "6.0.1",
     "react-router-dom": "4.3.1",
     "redux": "4.0.1",
-    "sb": "0.2.1"
+    "sb": "0.2.1",
+    "semantic-ui-css": "2.4.1",
+    "semantic-ui-react": "0.86.0"
   },
   "devDependencies": {
     "@storybook/cli": "5.0.0",

@@ -1,5 +1,6 @@
 :root {
     --sign-out-margin-right: 10px;
+    --padding-for-header: 40px
 }
 
 .site-header {
@@ -13,13 +14,68 @@
   color: white;
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--padding-for-header);
+  padding-right: var(--padding-for-header);
+
+  & > ul {
+    display: flex;
+  }
+  & > ul > li {
+    list-style: none;
+    margin: 5px;
+  }
+
+  .left-nav {
+    margin-right: auto;
+  }
+
+  .right-nav {
+    margin-left: auto;
+
+    & > a:hover {
+      cursor: pointer;
+    }
+
+    & > li{
+      display: flex;
+      position: relative;
+    }
+
+    .language-dropdown {
+      visibility: hidden;
+      position: absolute;
+      margin-top: 1rem;
+      top: 0.5rem;
+      left: 0px;
+      min-width: 8rem;
+      list-style: none;
+      padding: 5px;
+      background: silver;
+      transition: all 0.2s ease;
+      display: block;
+      a {
+        cursor: pointer;
+        display: block;
+        padding-left:15px;
+        padding-top:5px;
+      }
+      a:hover {
+        background-color: #ddd;
+      }
+    }
+
+    a:hover ~ .language-dropdown, & .language-dropdown:hover {
+      visibility: visible;
+
+
+    }
+  }
 }
 
 
 .logo {
-  text-decoration: none;
-  color: black;
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 3px;
@@ -66,31 +122,7 @@
   position: relative;
   margin-right: var(--sign-out-margin-right);
 
-  & > i:hover {
-    cursor: pointer;
-  }
 
-  ul {
-    visibility: hidden;
-    position: absolute;
-    margin-top: 1rem;
-    top: 0.5rem;
-    left: 0px;
-    right: calc(var(--sign-out-margin-right) * -1);
-    list-style: none;
-    padding: 5px;
-    background: darkblue;
-    transition: all 0.2s ease;
-  }
-
-  i:hover ~ ul, & ul:hover {
-    visibility: visible;
-    display: block;
-    li {
-      cursor: pointer;
-    }
-
-  }
 }
 
 .account-dropdown {
@@ -100,8 +132,3 @@
 
 
 
-.sign-out-link {
-  color:  #62DEBE;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-}

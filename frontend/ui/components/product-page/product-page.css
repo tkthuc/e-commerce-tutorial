@@ -3,10 +3,11 @@
 }
 
 .product-page {
-    width: 100%;
-    margin: 2em;
+    padding: 2em;
     display: flex;
     flex-direction: row;
+    width:100%;
+    box-sizing: border-box;
 
     .product-details {
       padding: 10px;

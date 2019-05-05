@@ -1,8 +1,14 @@
 .search-area {
-  display: flex;
   margin: auto;
-  width: 60%;
   padding-bottom: 10px;
+  background-color: aqua ;
+}
+
+.search-form {
+  width: 60%;
+  margin:auto;
+  padding: 10px;
+  display: flex;
 }
 
 .search-input {

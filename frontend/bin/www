@@ -36,30 +36,31 @@ var server = http.createServer(app);
  */
 
 server.listen(port, function(){
-
-    var watcher = consul.watch({
-        method: consul.health.service,
-        options: {
-            service:'product-service',
-            passing:true
-        }
-    },function (error,data) {
-        console.log(error);
-    });
-
-    //list all services managed by consul - no need
-    consul.agent.service.list(function(err, result) {
-        if (err) console.log(err);
-    });
-
-
-    watcher.on('change', (data,res) => {
-        console.log('received discovery update:', data.length);
-
-        data.forEach( ({Service}) => {
-            serviceLocation.setServiceLocation(Service.Service, { address:Service.Address, port: Service.Port});
+    if(process.env.NODE_ENV == 'production') {
+        var watcher = consul.watch({
+            method: consul.health.service,
+            options: {
+                service: 'product-service',
+                passing: true
+            }
+        }, function (error, data) {
+            console.log(error);
         });
-    });
+
+        //list all services managed by consul - no need
+        consul.agent.service.list(function (err, result) {
+            if (err) console.log(err);
+        });
+
+
+        watcher.on('change', (data, res) => {
+            console.log('received discovery update:', data.length);
+
+            data.forEach(({Service}) => {
+                serviceLocation.setServiceLocation(Service.Service, {address: Service.Address, port: Service.Port});
+            });
+        });
+    }
 
 });
 server.on('error', onError);

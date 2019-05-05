@@ -15,40 +15,55 @@ export default function(props) {
         return (
             <header className="site-header">
                 <nav className="navbar">
-                    <a href="/" className="logo"> Bookstore </a>
-                    <div className="nav-options">
-                        <ul>
-                            {
-                                tabs.map((item,index) =>
-                                    <li key={index} className={(index==activeIndex) ? "active":""}>
-                                        <a onClick={() => setActiveIndex(index)}>{item}</a>
-                                    </li>)
-                            }
-                        </ul>
-                    </div>
-                    <div className="account-actions">
-                        <i className="fa fa-globe account-dropdown">
-                        </i>
-                        <a href="#0" className="sign-out-link">Sign Out</a>
-                        <ul>
-                            <li> English </li>
-                        </ul>
-                    </div>
-                </nav>
-                <form className="search-area" style={{}}>
+                    <ul className="left-nav">
+                        <li><a href="/" className="logo"> <i className="home icon"></i> Bookstore </a></li>
+                        <li><a href="/" className="contact"> <i className="envelope icon"></i> Contact us </a></li>
+                        <li><a href="/" className="help"> <i className="info circle icon"/>  Help</a></li>
+                    </ul>
 
-                    <span className="search-dropdown">
+
+                    <ul className="right-nav">
+                        <li>
+                            <a>
+                                <i className="language icon">
+                                </i>
+                                English
+                            </a>
+                            <div className="language-dropdown">
+
+                                    <a>  English  </a>
+                                    <a>  French </a>
+                                    <a>  Spanish </a>
+                                    <a>  German </a>
+                                    <a>  Chinese </a>
+                                    <a>  Korean </a>
+                                    <a>  Japanese </a>
+
+                            </div>
+                        </li>
+                        <li> <a className="order_status"> <i className="compass icon"/>Order Status </a></li>
+                        <li> <a> <i className="heart outline icon"/> Wishlist </a></li>
+                        <li>
+                            <a href="#0"><i className="user icon"/>Log In</a>
+                        </li>
+
+                    </ul>
+                </nav>
+                <div className="search-area">
+                    <div className="search-form">
+                         <span className="search-dropdown">
                         <select>
                             <option>All</option>
                             <option>Fiction</option>
                             <option>Non-fiction</option>
                         </select>
-                    </span>
+                        </span>
 
 
-                    <input className="search-input" type="text" name="search_input"/>
-                    <button>Search</button>
-                </form>
+                        <input className="search-input" type="text" name="search_input"/>
+                        <button>Search</button>
+                    </div>
+                </div>
             </header>
         );
 
