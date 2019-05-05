@@ -4,6 +4,7 @@ import com.bookstore.productsevice.exception.ItemNotFoundException;
 import com.bookstore.productsevice.model.Book;
 import com.bookstore.productsevice.repository.BookRepository;
 import com.bookstore.productsevice.storage.StorageService;
+import com.bookstore.productsevice.validators.BookValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -47,7 +48,8 @@ public class BookController {
 
 
     @PostMapping("/products")
-    public ResponseEntity<Book> createBook(@RequestBody Book book) {
+    public ResponseEntity<Book> createBook(@RequestBody Book book) throws Exception {
+        BookValidator.validate(book);
         Book response = bookRepository.save(book);
         return new ResponseEntity<>(response,HttpStatus.OK);
     }

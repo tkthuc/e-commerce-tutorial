@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 @ErrorStatus(errorCode = BundleProperties.VALIDATION_FAIL, bundle = BundleProperties.BUNDLE_NAME, httpStatus = HttpStatus.BAD_REQUEST,
         errorDetailMethod = "errorDetail"
 )
-public class MissingParametersException {
+public class MissingParametersException extends Exception {
 
     private String[] params;
     public MissingParametersException(String[] params){
@@ -17,7 +17,8 @@ public class MissingParametersException {
     }
 
     public ErrorDetail errorDetail(){
-       String defaultMessage = String.format("Missing params %s",params);
-       return new SimpleErrorDetail(BundleProperties.MISSING_PARAM_EXCEPTION, defaultMessage,params);
+       String missingParams = String.join(",",params);
+       String defaultMessage = String.format("Missing params %s",missingParams);
+       return new SimpleErrorDetail(BundleProperties.MISSING_PARAM_EXCEPTION, defaultMessage,new String[] {missingParams});
     }
 }

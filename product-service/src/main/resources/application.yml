@@ -12,3 +12,5 @@ logging:
     org.springframework.cloud.consul: INFO
 server:
   port: 8080
+
+
