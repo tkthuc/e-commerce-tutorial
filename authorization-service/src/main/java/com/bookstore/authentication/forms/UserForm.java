@@ -1,7 +1,8 @@
 package com.bookstore.authentication.forms;
 
+
 public class UserForm {
-    private String userName;
+    private String username;
     private String firstName;
     private String lastName;
     private boolean enabled;
@@ -14,11 +15,11 @@ public class UserForm {
 
     }
 
-    public UserForm(String userName, String firstName, String lastName, //
+    public UserForm(String username, String firstName, String lastName, //
                 boolean enabled, String gender, //
                 String email, String password) {
         super();
-        this.userName = userName;
+        this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.enabled = enabled;
@@ -27,12 +28,12 @@ public class UserForm {
         this.password = password;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getFirstName() {

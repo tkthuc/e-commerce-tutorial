@@ -1,0 +1,50 @@
+.user-input-row {
+    margin: 0 auto;
+    width: 100%;
+    padding-bottom: 10px;
+}
+
+.user-input-row label{
+    display: block;
+}
+
+.user-input-row input{
+    display: block;
+    width: 100%;
+}
+
+.user-input-row input:focus {
+    box-shadow: 0px 0px 2px 2px rgba(81, 203, 238, 1);
+}
+.signup {
+    font-family: "Times New Roman";
+    margin: auto;
+    width: 400px;
+}
+
+
+.signup h1 {
+    text-align: center;
+}
+
+
+.login {
+    font-family: "Times New Roman";
+    margin: auto;
+    width: 400px;
+}
+
+
+.login h1 {
+    text-align: center;
+}
+
+.login hr {
+    display: block;
+    width: 80%;
+}
+
+.login .navigate-to-signup {
+    width: 40%;
+    margin: auto;
+}

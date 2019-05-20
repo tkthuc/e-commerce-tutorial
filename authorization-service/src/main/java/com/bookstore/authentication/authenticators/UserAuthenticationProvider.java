@@ -27,13 +27,13 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        String name = authentication.getName();
+        String email = authentication.getName();
         String password = authentication.getCredentials().toString();
 
-        List<User> users = userRepository.findAllByUserName(name);
+        List<User> users = userRepository.findAllByEmail(email);
 
         if(users.size() > 0 && encoder.matches(password, users.get(0).getEncrytedPassword())) {
-            return new UsernamePasswordAuthenticationToken(name, password, new ArrayList<>());
+            return new UsernamePasswordAuthenticationToken(email, password, new ArrayList<>());
         }
 
         throw new BadCredentialsException("Authentication failed");

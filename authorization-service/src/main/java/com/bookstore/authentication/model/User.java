@@ -7,7 +7,7 @@ public class User {
 
     @Id
     private String userId;
-    private String userName;
+    private String username;
     private String firstName;
     private String lastName;
     private boolean enabled;
@@ -21,12 +21,12 @@ public class User {
 
     }
 
-    public User(String userId, String userName, String firstName, String lastName, //
+    public User(String userId, String username, String firstName, String lastName, //
                    boolean enabled, String gender, //
                    String email,String countryCode, String encrytedPassword) {
         super();
         this.userId = userId;
-        this.userName = userName;
+        this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.enabled = enabled;
@@ -44,12 +44,12 @@ public class User {
         return this;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public User setUserName(String userName) {
-        this.userName = userName;
+    public User setUsername(String userName) {
+        this.username = userName;
         return this;
     }
 

@@ -5,5 +5,10 @@ spring:
     mongodb:
       port: ${spring.authorization.mongo.port:27017}
       database: user
+  mvc:
+    view:
+      suffix: .html
 server:
   port: 8080
+  servlet:
+    context-path: /

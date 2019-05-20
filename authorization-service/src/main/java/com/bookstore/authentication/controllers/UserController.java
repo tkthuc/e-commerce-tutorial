@@ -36,7 +36,7 @@ public class UserController {
         User user = new User();
         user.setEncrytedPassword(passwordEncoder.encode(userForm.getPassword()))
                 .setEmail(userForm.getEmail())
-                .setUserName(userForm.getUserName())
+                .setUsername(userForm.getUsername())
                 .setFirstName(userForm.getFirstName())
                 .setLastName(userForm.getLastName())
                 .setGender(userForm.getGender());

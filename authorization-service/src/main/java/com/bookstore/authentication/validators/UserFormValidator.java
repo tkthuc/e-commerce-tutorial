@@ -41,9 +41,9 @@ public class UserFormValidator {
             throw new EmailNotAvailableException(user.getEmail());
         }
 
-        List<User> existingUserWithSameUsername = userRepository.findAllByUserName(user.getUserName());
+        List<User> existingUserWithSameUsername = userRepository.findAllByUsername(user.getUsername());
         if(existingUserWithSameEmail.size() > 0) {
-            throw new UsernameNotAvailableException(user.getUserName());
+            throw new UsernameNotAvailableException(user.getUsername());
         }
 
     }
