@@ -1,5 +1,5 @@
 import * as React from 'react';
-import axios from 'axios';
+import axios, {AxiosPromise} from 'axios';
 
 import { Book } from '../common/interfaces';
 import IBookServices from './IBookServices';
@@ -14,7 +14,12 @@ export const BookServices : IBookServices  ={
     },
 
     getBookById(id:string)  {
-        return axios.get(`/products/${id}`) as any;
+        const token = localStorage.getItem('token');
+
+        return axios.get(
+            `/products/${id}`,
+            { headers: {"Authorization" : `Bearer ${token}`} }
+        ) as AxiosPromise;
     }
 
 

@@ -13,7 +13,7 @@ services:
     environment:
     - spring.cloud.consul.enabled=true
     ports:
-    - "8080:8080"
+    - "8080:8080" #need to remove exposed port in production
     depends_on:
     - mongodb
     - consul

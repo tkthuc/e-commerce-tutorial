@@ -3,5 +3,6 @@ export interface Book {
     name: string,
     price: number,
     authors: string[],
-    description?: string
+    description?: string,
+    picture?: string
 }

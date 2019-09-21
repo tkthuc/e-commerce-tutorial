@@ -4,7 +4,10 @@ var endpoints = {
         address: "127.0.0.1",
         port: 8080
     },
-
+    "authentication-service": {
+        address: "127.0.0.1",
+        port: 8081
+    }
 };
 
 module.exports = {

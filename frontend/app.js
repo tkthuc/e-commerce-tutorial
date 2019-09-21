@@ -7,6 +7,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var productRouter = require('./routes/product');
+var authenticationRouter = require('./routes/authentication');
 
 var app = express();
 
@@ -24,7 +25,10 @@ app.set('views', path.join(__dirname, './public'));
 
 app.use(express.static(path.join(__dirname, './public')));
 
+
 app.use('/products', productRouter);
+
+app.use('/authenticate', authenticationRouter);
 
 app.use('*',indexRouter);
 

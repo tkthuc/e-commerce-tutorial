@@ -8,8 +8,9 @@ import {Card, Image} from 'semantic-ui-react';
 
 type Props = {
     quantity: number,
-    productName: string,
+    name: string,
     price: number,
+    picture?:string,
     description ?:string,
     openProduct ?: Function
 }
@@ -36,7 +37,7 @@ export default class ProductBox extends React.Component<Props,  Readonly<State>>
     }
 
     openProduct() {
-        this.props.openProduct ? this.props.openProduct(this.props.productName) :null ;
+        this.props.openProduct ? this.props.openProduct(this.props.name) :null ;
     }
 
 
@@ -44,9 +45,9 @@ export default class ProductBox extends React.Component<Props,  Readonly<State>>
         return (
 
             <Card className="product-box">
-                <Image onClick={this.openProduct.bind(this)} className="item-image"/>
+                <Image onClick={this.openProduct.bind(this)} className="item-image" src={`products/image/${this.props.picture}`}/>
                 <Card.Content>
-                    <Card.Header>{this.props.productName}</Card.Header>
+                    <Card.Header>{this.props.name}</Card.Header>
                     <Card.Description>{this.props.description}</Card.Description>
                 </Card.Content>
                 <Card.Content extra>
