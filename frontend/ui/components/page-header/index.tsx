@@ -11,6 +11,7 @@ import Modal from '../modal/modal';
 import {useState} from "react";
 import {Fragment} from "react";
 
+import UserContext from '../../context/userContext';
 
 export default function(props) {
 
@@ -22,6 +23,8 @@ export default function(props) {
 
 
         let [isLoginPopupVisible, setLoginPopupVisibility] = useState<boolean>(false);
+
+        let { username, setUsername } = React.useContext(UserContext);
 
         const showLoginPopup = function():void {
             setLoginPopupVisibility(true);
@@ -62,7 +65,13 @@ export default function(props) {
                             <li> <a className="order_status"> <i className="compass icon"/>Order Status </a></li>
                             <li> <a> <i className="heart outline icon"/> Wishlist </a></li>
                             <li>
-                                <a href="#0" onClick={() => showLoginPopup()}><i className="user icon"/>Log In</a>
+                                {
+                                    username == null
+                                    ?
+                                    <a href="#0" onClick={() => showLoginPopup()}><i className="user icon"/>Log In</a>
+                                    :
+                                    <a>{username}</a>
+                                }
                             </li>
 
                         </ul>
@@ -111,7 +120,10 @@ export default function(props) {
 
 
                 {
-                    isLoginPopupVisible &&  <ModalWithLogin callback={() => setLoginPopupVisibility(false)}/>
+                    isLoginPopupVisible &&  <ModalWithLogin callback={({email}) => {
+                        setUsername(email);
+                        setLoginPopupVisibility(false);
+                    }}/>
                 }
 
             </Fragment>

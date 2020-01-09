@@ -50,6 +50,16 @@ server.listen(port, function(){
         //list all services managed by consul - no need
         consul.agent.service.list(function (err, result) {
             if (err) console.log(err);
+            Object.keys(result).forEach( key => {
+                let Service = result[key];
+                console.log({name: Service.Service, address: Service.Address, port: Service.Port})
+                serviceLocation.setServiceLocation(Service.Service, {
+                    address: Service.Address,
+                    port: Service.Port
+                });
+
+
+            })
         });
 
 
@@ -57,6 +67,7 @@ server.listen(port, function(){
             console.log('received discovery update:', data.length);
 
             data.forEach(({Service}) => {
+                console.log({address: Service.Address, port: Service.Port})
                 serviceLocation.setServiceLocation(Service.Service, {address: Service.Address, port: Service.Port});
             });
         });

@@ -9,4 +9,8 @@ public class BundleProperties {
 
     public static final String ITEM_NOT_FOUND = "BOOK.0001.2";
 
+    public static final String UNABLE_TO_READ_FILE = "BOOK.0001.3";
+
+    public static final String FILE_NOT_FOUND = "BOOK.0001.4";
+
 }

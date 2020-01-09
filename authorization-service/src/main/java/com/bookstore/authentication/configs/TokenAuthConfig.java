@@ -1,23 +1,18 @@
-package com.bookstore.authentication;
+package com.bookstore.authentication.configs;
 
-import com.bookstore.authentication.configs.JwtConfig;
-import com.bookstore.authentication.encoders.PasswordEncoder;
-import com.bookstore.authentication.encoders.PasswordEncoderImpl;
-import com.bookstore.authentication.filters.TokenAuthenticationFilter;
-import io.jsonwebtoken.Jwt;
+import com.bookstore.authentication.authenticators.UserAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,11 +29,13 @@ public class TokenAuthConfig extends WebSecurityConfigurerAdapter {
     @Value("${jwt.get.token.uri}")
     private String authenticationPath;
 
+    @Autowired
+    private UserAuthenticationProvider userAuthenticationProvider;
 
-    @Bean
-    public PasswordEncoder encode() {
-        return new PasswordEncoderImpl();
-    }
+
+    @Value("${jwt.get.token.uri}")
+    private String jwtTokenRequest;
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -51,36 +48,25 @@ public class TokenAuthConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint((req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
                 .and()
                 // Add a filter to validate the tokens with every request
-                .addFilterAfter(new TokenAuthenticationFilter(jwtConfig), UsernamePasswordAuthenticationFilter.class)
+               // .addFilterBefore(new TokenAuthenticationFilter(jwtConfig), UsernamePasswordAuthenticationFilter.class)
                 // authorization requests config
                 .authorizeRequests()
                 // allow all who are accessing "auth" service
-                .antMatchers(HttpMethod.POST, "/user").permitAll()
-                .antMatchers(
-                        HttpMethod.GET,
-                        "/","/e-commerce","/login","/signup","/index*", "/resources/**").permitAll()
-                // must be an admin if trying to access admin area (authentication is also required here)
-                // Any other request must be authenticated
-                .anyRequest().authenticated()
-                .and()
-                .formLogin().loginPage("/index.html");
+                .antMatchers(HttpMethod.POST, jwtTokenRequest).permitAll()
+                .antMatchers(HttpMethod.GET, "/actuator/health", "/getSecretKey").permitAll()
+                .anyRequest().authenticated();
     }
 
 
+
+    @Override    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(userAuthenticationProvider);
+        auth.userDetailsService(new JwtUserDetailService());
+    }
+
+    @Bean
     @Override
-    public void configure(WebSecurity webSecurity) throws Exception {
-        webSecurity
-                .ignoring()
-                .antMatchers(
-                        HttpMethod.POST,
-                        authenticationPath
-                )
-                .antMatchers(HttpMethod.OPTIONS, "/**");
-
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
-
-
-
-
-
 }

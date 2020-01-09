@@ -23,7 +23,7 @@ export default function(props) {
 
        AuthStorage.authenticateUser(jwt.data);
 
-       props.callback && props.callback();
+       props.callback && props.callback(credentials);
 
     };
 

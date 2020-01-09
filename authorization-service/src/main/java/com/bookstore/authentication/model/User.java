@@ -14,6 +14,7 @@ public class User {
     private String gender;
     private String email;
 
+    private String role;
     @JsonIgnore
     private String encrytedPassword;
 
@@ -21,7 +22,7 @@ public class User {
 
     }
 
-    public User(String userId, String username, String firstName, String lastName, //
+    public User(String username, String firstName, String lastName, //
                    boolean enabled, String gender, //
                    String email,String countryCode, String encrytedPassword) {
         super();
@@ -107,4 +108,11 @@ public class User {
         return this;
     }
 
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getRole() {
+        return role;
+    }
 }

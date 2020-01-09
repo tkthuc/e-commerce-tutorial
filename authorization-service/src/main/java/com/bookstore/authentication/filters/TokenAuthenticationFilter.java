@@ -3,6 +3,7 @@ package com.bookstore.authentication.filters;
 import com.bookstore.authentication.configs.JwtConfig;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -51,8 +52,10 @@ public class TokenAuthenticationFilter  extends OncePerRequestFilter {
                 );
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }
-        }catch (Exception e){
+        }catch (Exception ex){
             SecurityContextHolder.clearContext();
+            httpServletResponse.sendError(HttpStatus.UNAUTHORIZED.value(), ex.getMessage());
+            return;
         }
         filterChain.doFilter(httpServletRequest,httpServletResponse);
     }

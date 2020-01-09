@@ -41,6 +41,11 @@ public class BookController {
         return new ResponseEntity<>(books, HttpStatus.OK);
     }
 
+    @PostMapping("/products/tests")
+    public ResponseEntity<Void> saveBooks(@RequestBody  List<Book> books){
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
     @PostMapping("/products")
     public ResponseEntity<Book> createBook(@RequestBody Book book) throws Exception {

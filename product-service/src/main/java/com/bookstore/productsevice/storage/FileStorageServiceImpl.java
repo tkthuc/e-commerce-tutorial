@@ -34,6 +34,11 @@ public class FileStorageServiceImpl implements StorageService {
     @Override
     public String store(MultipartFile file) {
         String filename = StringUtils.cleanPath(file.getOriginalFilename());
+        return store(file, filename);
+    }
+
+    @Override
+    public String store(MultipartFile file, String filename) {
         try {
             if(file.isEmpty()) {
                 throw new StorageException("Can not store empty file");
@@ -67,7 +72,7 @@ public class FileStorageServiceImpl implements StorageService {
 
 
     @Override
-    public Resource loadAsResource(String filename) {
+    public Resource loadAsResource(String filename) throws Exception {
         try{
             Path file = load(filename);
             Resource resource = new UrlResource(file.toUri());
@@ -77,7 +82,7 @@ public class FileStorageServiceImpl implements StorageService {
                 throw new StorageException(String.join(" "," Could not read file ", filename ));
             }
         } catch (MalformedURLException e) {
-            throw new StorageFileNotFoundException("Could not read file: " + filename, e);
+            throw new StorageFileNotFoundException(filename);
         }
     }
 

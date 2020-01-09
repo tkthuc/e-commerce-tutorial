@@ -18,8 +18,11 @@ export default function(props) {
     };
 
     const handleSubmit = (event) => {
-      AuthServices.login(credentials);
-        event.preventDefault();
+
+      AuthServices.login(credentials)
+
+       // event.preventDefault();
+
 
     };
 

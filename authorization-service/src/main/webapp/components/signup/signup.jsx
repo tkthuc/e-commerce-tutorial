@@ -17,7 +17,16 @@ export default function(props) {
     let [errorMessage,setErrorMessage] = useState("");
 
     const handleSubmit = (event) => {
-        AuthServices.signup(userInfo);
+
+            AuthServices.signup(userInfo)
+                .then(() => {
+                    props.history.push('/login');
+                })
+                .catch(err => {
+                    setErrorMessage(err.response.data.message);
+                });
+
+
         event.preventDefault();
 
     };

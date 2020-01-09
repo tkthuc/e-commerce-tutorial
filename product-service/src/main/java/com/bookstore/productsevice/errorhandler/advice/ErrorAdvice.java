@@ -32,7 +32,7 @@ public class ErrorAdvice {
         Locale locale = request.getLocale();
         Object errorDetail =  null;
 
-        if(!errorStatus.errorDetailMethod().isEmpty()) {
+        if(errorStatus != null && !errorStatus.errorDetailMethod().isEmpty()) {
 
             Method errorDetailMethod = ReflectionUtils
                     .findMethod(exception.getClass(), errorStatus.errorDetailMethod());

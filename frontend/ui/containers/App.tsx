@@ -11,6 +11,8 @@ import PageHeader from '../components/page-header';
 
 import './App.css';
 
+import UserContext from '../context/userContext';
+
 const LoadingComponent = () => <h3>please wait...</h3>;
 
 const AsyncHome = loadable({
@@ -23,25 +25,44 @@ const AsyncProduct = loadable({
     loading: LoadingComponent
 })
 
+export interface IAppContext {
+    username: string
+}
 
-export default class App extends React.Component{
+export default class App extends React.Component<{},IAppContext>{
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: null
+        }
+    }
 
+    setUsername(username) {
+        this.setState({
+            username
+        })
+    }
 
     render() {
+
+
+
         return (
-            <BrowserRouter>
-                <div className="App">
-                    <PageHeader/>
+            <UserContext.Provider value={{username: this.state.username,setUsername: this.setUsername.bind(this)}}>
+                <BrowserRouter>
+                    <div className="App">
+                        <PageHeader/>
 
-                    <Switch>
-                        <Route exact path="/" component={AsyncHome}></Route>
-                        <Route path="/product/:id" component={AsyncProduct}></Route>
-                    </Switch>
+                        <Switch>
+                            <Route exact path="/" component={AsyncHome}></Route>
+                            <Route path="/product/:id" component={AsyncProduct}></Route>
+                        </Switch>
 
 
-                </div>
-            </BrowserRouter>
+                    </div>
+                </BrowserRouter>
+            </UserContext.Provider>
         );
     }
 }

@@ -22,7 +22,7 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
     UserRepository userRepository;
 
     @Autowired
-    PasswordEncoder encoder;
+    PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -32,7 +32,7 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
 
         List<User> users = userRepository.findAllByEmail(email);
 
-        if(users.size() > 0 && encoder.matches(password, users.get(0).getEncrytedPassword())) {
+        if(users.size() > 0 && passwordEncoder.matches(password, users.get(0).getEncrytedPassword())) {
             return new UsernamePasswordAuthenticationToken(email, password, new ArrayList<>());
         }
 

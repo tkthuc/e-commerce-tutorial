@@ -1,4 +1,4 @@
-package com.bookstore.authentication;
+package com.bookstore.authentication.configs;
 
 import com.bookstore.authentication.encoders.PasswordEncoder;
 import com.bookstore.authentication.encoders.PasswordEncoderImpl;
@@ -9,6 +9,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfiguration implements WebMvcConfigurer {
+
+    @Bean
+    public PasswordEncoder encoder() {
+        return new PasswordEncoderImpl();
+    }
 
 
     @Override

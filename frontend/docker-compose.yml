@@ -17,6 +17,17 @@ services:
     depends_on:
     - mongodb
     - consul
+    - authentication-service
+
+  authentication-service:
+    image: auth-service
+    environment:
+    - spring.cloud.consul.enabled=true
+    ports:
+    - "8081:8081" #need to remove exposed port in production
+    depends_on:
+    - mongodb
+    - consul
 
   mongodb:
     image: mongo
