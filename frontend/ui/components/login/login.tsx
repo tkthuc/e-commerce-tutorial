@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { useState } from 'react';
 
+import {Message} from 'semantic-ui-react';
+
 import '../user-form.css';
 import './login.css';
 
@@ -15,15 +17,20 @@ export default function(props) {
         password: ""
     });
 
+    let [errorMessage, setErrorMessage] = useState(null);
+
 
     const handleSubmit = async (event) => {
+       event.preventDefault();
+       try {
+           const jwt = await AuthServices.login(credentials);
 
+           AuthStorage.authenticateUser(jwt.data as any, credentials.email);
 
-       const jwt = await AuthServices.login(credentials);
-
-       AuthStorage.authenticateUser(jwt.data);
-
-       props.callback && props.callback(credentials);
+           props.callback && props.callback(credentials);
+       } catch (e) {
+            setErrorMessage("Wrong username or password");
+       }
 
     };
 
@@ -33,11 +40,14 @@ export default function(props) {
 
     return (
 
-        <div className="login" onSubmit={handleSubmit}>
+        <form className="login" onSubmit={handleSubmit}>
             <h1>Sign in</h1>
             <div className="user-input-row"> <label>Email </label> <input type="email" name="email" value={credentials.email} onChange={handleChange}/></div>
             <div className="user-input-row"> <label>Password </label> <input type="password" name="password" value={credentials.password} onChange={handleChange}/> </div>
-            <button onClick={handleSubmit}>Log in</button>
-        </div>
+            {
+                errorMessage && <Message color='red'>{errorMessage}</Message>
+            }
+            <input type="submit" value="Submit"/>
+        </form>
     );
 }

@@ -13,7 +13,7 @@ import Modal from '../components/modal/modal';
 
 storiesOf('Button', module)
     .add('product box', () => (
-        <ProductBox quantity={1} price={1000} name={"Story Book"} ></ProductBox>
+        <ProductBox quantity={1} priceUsd={1000} name={"Story Book"} ></ProductBox>
     ))
     .add('product page', () => (
         <ProductPage name={"Vintage Typewriter"} priceUsd={20} description={"This typewriter looks good in your living room."} />

@@ -18,6 +18,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.EnableRetry;
+import org.springframework.retry.annotation.Retryable;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
@@ -26,6 +30,7 @@ import java.util.List;
 
 @SpringBootApplication
 @EnableDiscoveryClient
+@EnableRetry
 @ServletComponentScan
 public class BookServiceApplication {
 
@@ -50,6 +55,7 @@ public class BookServiceApplication {
 
 
     @Bean
+    @Retryable(value = RestClientException.class, maxAttempts = 4, backoff = @Backoff(delay = 5000))
     public CommandLineRunner setSecretKey() {
         return new CommandLineRunner() {
             @Override

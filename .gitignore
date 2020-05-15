@@ -3,3 +3,4 @@ webapp/dist
 public
 dist
 .idea/
+node/

@@ -1,18 +1,17 @@
 import * as React from 'react';
 
-import { Link } from 'react-router-dom';
-
 import './product-box.css';
 
-import {Card, Image} from 'semantic-ui-react';
+import {Card, Image, Button} from 'semantic-ui-react';
 
 type Props = {
     quantity: number,
     name: string,
-    price: number,
+    priceUsd: number,
     picture?:string,
     description ?:string,
-    openProduct ?: Function
+    openProduct ?: Function,
+    authors?: string[]
 }
 
 type State = {
@@ -48,19 +47,15 @@ export default class ProductBox extends React.Component<Props,  Readonly<State>>
                 <Image onClick={this.openProduct.bind(this)} className="item-image" src={`products/image/${this.props.picture}`}/>
                 <Card.Content>
                     <Card.Header>{this.props.name}</Card.Header>
-                    <Card.Description>{this.props.description}</Card.Description>
+                    <Card.Description>
+                        <div className="content-section"> {this.props.authors.join(" and ")} </div>                     
+                        <div className="content-section"> C$ {this.props.priceUsd} </div>
+                    </Card.Description>                  
                 </Card.Content>
-                <Card.Content extra>
-                    <div className="item-quantity">
-                        <div className="quantity">
-                            <input onChange={this.updateQuantity.bind(this)} value={this.state.quantity} type="text"></input>
-                        </div>
-                        <div className="button">
-                                <button>
-                                Add to cart
-                                </button>
-                        </div>
-                    </div>
+                <Card.Content extra>                   
+                    <Button>
+                        <Button.Content>Add to Cart</Button.Content>                        
+                    </Button>
                 </Card.Content>
             </Card>
         );

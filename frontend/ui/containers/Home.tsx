@@ -4,8 +4,6 @@ import ProductBox from "../components/product-box/product-box";
 import {Book} from "../common/interfaces";
 import {BookServices} from "../api/bookServices";
 
-import {Route} from 'react-router-dom';
-
 
 export default class Home extends React.Component<{history: any},{books: Book[], [key:string]:any}> {
 
@@ -28,17 +26,17 @@ export default class Home extends React.Component<{history: any},{books: Book[],
         }
     }
 
-    openProduct(product: Book) {
-        this.props.history.push(`/product/${product.id}`);
+    openProduct(book: Book) {
+        this.props.history.push(`/product/${book.id}`);
     }
 
 
     render() {
         return (
-            <div className="App-content ui cards">
+            <div className="App-content ui">
             {
                 this.state.books.map(
-                    (product,index) => <ProductBox key={index} {...product} quantity={1} openProduct={() => this.openProduct(product)}/>
+                    (book,index) => <ProductBox key={index} {...book} quantity={1} openProduct={() => this.openProduct(book)}/>
                 )
             }
             </div>

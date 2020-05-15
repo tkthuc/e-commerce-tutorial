@@ -27,6 +27,11 @@ router.get('/:id', async (req, res, next) => {
             );
         res.send(response.data);
     } catch (e) {
+        debugger;
+        if(e.response && e.response.status == 401) {
+            res.sendStatus(401);      
+            return;    
+        }
         next(e);
     }
 

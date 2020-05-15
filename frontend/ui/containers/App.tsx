@@ -13,6 +13,8 @@ import './App.css';
 
 import UserContext from '../context/userContext';
 
+import Auth from '../api/authenticationStorage';
+
 const LoadingComponent = () => <h3>please wait...</h3>;
 
 const AsyncHome = loadable({
@@ -34,11 +36,14 @@ export default class App extends React.Component<{},IAppContext>{
     constructor(props) {
         super(props);
         this.state = {
-            username: null
+            username: Auth.getUser()
         }
     }
 
     setUsername(username) {
+        if(!username) {
+            Auth.deauthenticateUser();
+        }
         this.setState({
             username
         })

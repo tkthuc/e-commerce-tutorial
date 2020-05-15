@@ -12,6 +12,7 @@ import {useState} from "react";
 import {Fragment} from "react";
 
 import UserContext from '../../context/userContext';
+import set = Reflect.set;
 
 export default function(props) {
 
@@ -30,6 +31,8 @@ export default function(props) {
             setLoginPopupVisibility(true);
         }
 
+        let [language, setLanguage] = React.useState("English");
+        const languages = ["English", "Spanish", "Chinese", "French", "German"];
         const ModalWithLogin = Modal(Login);
 
         return (
@@ -48,29 +51,31 @@ export default function(props) {
                                 <a>
                                     <i className="language icon">
                                     </i>
-                                    English
+                                    {language}
                                 </a>
-                                <div className="language-dropdown">
-
-                                        <a>  English  </a>
-                                        <a>  French </a>
-                                        <a>  Spanish </a>
-                                        <a>  German </a>
-                                        <a>  Chinese </a>
-                                        <a>  Korean </a>
-                                        <a>  Japanese </a>
-
+                                <div className="header-dropdown">
+                                    {
+                                        languages.map(language => {
+                                            return <a onClick={() => setLanguage(language)}>  {language} </a>
+                                        })
+                                    }
                                 </div>
                             </li>
                             <li> <a className="order_status"> <i className="compass icon"/>Order Status </a></li>
                             <li> <a> <i className="heart outline icon"/> Wishlist </a></li>
                             <li>
+
                                 {
                                     username == null
                                     ?
                                     <a href="#0" onClick={() => showLoginPopup()}><i className="user icon"/>Log In</a>
                                     :
-                                    <a>{username}</a>
+                                    <div>
+                                        <a> <i className="user icon"></i> {username} </a>
+                                        <div className="header-dropdown">
+                                            <a onClick={() => setUsername(null)}>Log out</a>
+                                        </div>
+                                    </div>
                                 }
                             </li>
 
@@ -120,10 +125,12 @@ export default function(props) {
 
 
                 {
-                    isLoginPopupVisible &&  <ModalWithLogin callback={({email}) => {
-                        setUsername(email);
-                        setLoginPopupVisibility(false);
-                    }}/>
+                    isLoginPopupVisible &&  <ModalWithLogin
+                        callback={({email}) => {
+                            setUsername(email);
+                            setLoginPopupVisibility(false);
+                        }}
+                    />
                 }
 
             </Fragment>

@@ -44,7 +44,7 @@
       position: relative;
     }
 
-    .language-dropdown {
+    .header-dropdown {
       visibility: hidden;
       position: absolute;
       margin-top: 1rem;
@@ -67,12 +67,22 @@
       }
     }
 
-    a:hover ~ .language-dropdown, & .language-dropdown:hover {
+    a:hover ~ .header-dropdown, & .header-dropdown:hover {
       visibility: visible;
     }
   }
 }
 
+.username-dropdown {
+  visibility: hidden;
+  position: absolute;
+  top:1em;
+  left:0;
+}
+
+.username:hover ~ .username-dropdown {
+  visibility: visible;
+}
 
 .logo {
   font-size: 0.9rem;

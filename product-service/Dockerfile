@@ -4,6 +4,8 @@ WORKDIR /app
 
 COPY pom.xml ./
 COPY ./src ./src/
+COPY ./static ./static/
+
 
 RUN mvn package -DskipTests
 
@@ -14,6 +16,7 @@ FROM openjdk:8-jre-alpine
 ARG version
 WORKDIR /app
 COPY --from=builder /app/target/product-service-${version}.jar ./product-service.jar
+COPY --from=builder /app/static ./static
 EXPOSE 8080
 
 ENTRYPOINT ["sh", "-c"]

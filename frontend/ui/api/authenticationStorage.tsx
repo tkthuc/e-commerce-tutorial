@@ -1,3 +1,4 @@
+export const UserNameKey = "USER_NAME_KEY_BOOKSTORE";
 class Auth {
 
     /**
@@ -5,8 +6,9 @@ class Auth {
      *
      * @param {string} token
      */
-    static authenticateUser(token) {
+    static authenticateUser(token: string, email?: string) {
         localStorage.setItem('token', token);
+        localStorage.setItem(UserNameKey, email);
     }
 
     /**
@@ -24,6 +26,7 @@ class Auth {
      */
     static deauthenticateUser() {
         localStorage.removeItem('token');
+        localStorage.removeItem(UserNameKey);
     }
 
     /**
@@ -35,6 +38,11 @@ class Auth {
     static getToken() {
         return localStorage.getItem('token');
     }
+
+    static getUser() : string {
+        return localStorage.getItem(UserNameKey) || null;
+    }
+
 
 }
 

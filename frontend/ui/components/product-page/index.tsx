@@ -8,8 +8,11 @@ export interface IProductProps {
     priceUsd: number,
     description?: string,
     quantity?: number,
-    picture?: string
+    picture?: string,
+    authors?: string[]
 }
+
+
 
 export default function(props : IProductProps) {
 
@@ -51,7 +54,8 @@ export default function(props : IProductProps) {
 
                 <div className="product-description">
                     <strong> Product description: </strong>
-                    <div> {props.description} </div>
+                    <div style={{paddingBottom:"10px"}}> {props.description} </div>
+                    <div style={{paddingBottom:"10px"}}> By(author) {props.authors.join(" and ")} </div>
                 </div>
 
                 <hr/>
