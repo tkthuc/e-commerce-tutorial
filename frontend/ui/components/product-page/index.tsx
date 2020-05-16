@@ -2,6 +2,9 @@ import * as React from 'react';
 import { useState } from 'react';
 
 import './product-page.css';
+import { Button } from 'semantic-ui-react';
+
+import styled from 'styled-components';
 
 export interface IProductProps {
     name: string,
@@ -12,7 +15,24 @@ export interface IProductProps {
     authors?: string[]
 }
 
+const StyledQuantityText = styled.div`       
+    flex: 1; 
+    display:flex;
+    align-items: center;
+`;
 
+const StyledQuantityInput = styled.div`
+    display:flex;
+    flex-direction: row;
+    align-items: center;    
+    border-radius: 4px;
+    border: 2px solid greenyellow;  
+`
+
+const StyledQuantitySection = styled.div `
+    display: flex;
+    width: 8em;
+`;
 
 export default function(props : IProductProps) {
 
@@ -22,7 +42,7 @@ export default function(props : IProductProps) {
     }
 
 
-    let style = {display:"flex"};
+
 
     let [quantity, setQuantity] = useState(0);
 
@@ -61,18 +81,21 @@ export default function(props : IProductProps) {
                 <hr/>
 
                 <div className="quantity-form">
-                    <div style={style}>
-                        <span> Quantity </span>
-                        <div className="quantity-input-box">
+                    <StyledQuantitySection>
+                        <StyledQuantityText> 
+                            <label> Quantity </label>
+                        </StyledQuantityText>
+                        <StyledQuantityInput>
                             <input name="quantity" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value))}></input>
                             <div className="up-down-buttons">
                                 <span onClick={increaseQuantity}><i className="caret up icon"></i></span>
                                 <span onClick={decreaseQuantity}><i className="caret down icon"></i></span>
                             </div>
-                        </div>
-                    </div>
-                    <button> Add to cart </button>
+                        </StyledQuantityInput>
+                    </StyledQuantitySection>                   
+                    <Button> Add to cart </Button>
                 </div>
+                
             </div>
         </div>
     )

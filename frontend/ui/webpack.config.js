@@ -3,6 +3,11 @@ const htmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const AsyncChunkNames = require('webpack-async-chunk-names-plugin');
 
+const createStyledComponentsTransformer = require('typescript-plugin-styled-components').default;
+// 2. create a transformer;
+// the factory additionally accepts an options object which described below
+const styledComponentsTransformer = createStyledComponentsTransformer();
+
 module.exports = {
     mode: "development",
     entry: "./index.tsx",
@@ -19,7 +24,10 @@ module.exports = {
         rules: [
             {
                 test: /\.tsx?$/,
-                loader: "ts-loader"
+                loader: "ts-loader",
+                options: {                   
+                    getCustomTransformers: () => ({ before: [styledComponentsTransformer] })
+                }
             },
             {
                 test: /\.css$/,

@@ -10,10 +10,8 @@ function getHost() {
 
 module.exports = proxy(getHost,{
     memoizeHost: false,
-    proxyReqPathResolver: function (req) {
-        debugger;
-        console.log(`${endpoints.getServiceLocationPath("authentication-service")}`)
+    proxyReqPathResolver: function (req) {        
+       console.log(`${endpoints.getServiceLocationPath("authentication-service")}`)
        return req.baseUrl;
-
     }
 });
