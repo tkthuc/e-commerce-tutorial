@@ -1,7 +1,5 @@
 import * as React  from 'react';
 
-
-
 import './page-header.css';
 import './search-box.css';
 import './cart-bar.css';
@@ -12,7 +10,28 @@ import {useState} from "react";
 import {Fragment} from "react";
 
 import UserContext from '../../context/userContext';
-import set = Reflect.set;
+
+import { Popup, Menu, Label, Button } from 'semantic-ui-react';
+
+import styled from 'styled-components';
+
+const StyledNav = styled.nav`
+    padding-left: 10%;
+    padding-right: 10%;
+`;
+
+const StyledCenteredDiv = styled.div`
+    display: flex;
+    align-items: center;
+    width: 20%;
+`;
+
+const StyledLinkHovered = styled.a`
+    &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+    }
+`
 
 export default function(props) {
 
@@ -38,9 +57,8 @@ export default function(props) {
         return (
             <Fragment>
                 <header className="site-header">
-                    <nav className="navbar">
-                        <ul className="left-nav">
-                            <li><a href="/" className="logo"> <i className="home icon"></i> Bookstore </a></li>
+                    <StyledNav className="navbar">
+                        <ul className="left-nav">                           
                             <li><a href="/" className="contact"> <i className="envelope icon"></i> Contact us </a></li>
                             <li><a href="/" className="help"> <i className="info circle icon"/>  Help</a></li>
                         </ul>
@@ -68,20 +86,36 @@ export default function(props) {
                                 {
                                     username == null
                                     ?
-                                    <a href="#0" onClick={() => showLoginPopup()}><i className="user icon"/>Log In</a>
+                                        <SignInOrJoinPopUp showLoginPopup={showLoginPopup}/>
                                     :
-                                    <div>
-                                        <a> <i className="user icon"></i> {username} </a>
-                                        <div className="header-dropdown">
-                                            <a onClick={() => setUsername(null)}>Log out</a>
-                                        </div>
-                                    </div>
+                                    <Popup trigger={<a> <i className="user icon"></i> {username} </a>} hoverable>                                        
+                                         <Menu vertical className="borderless" 
+                                                style={{
+                                                    border: "none",
+                                                    boxShadow: "none"
+                                                }}
+                                            >
+                                            <Menu.Item
+                                                name='profile'                                             
+                                                >
+                                                <StyledLinkHovered> Your Profile </StyledLinkHovered>                                                
+                                            </Menu.Item>
+
+                                            <Menu.Item
+                                                name='logout'                                              
+                                                onClick={() => setUsername(null)}
+                                                >
+                                                <StyledLinkHovered> Log out </StyledLinkHovered>
+                                            </Menu.Item>
+                                         </Menu>
+                                    </Popup>                               
                                 }
                             </li>
 
                         </ul>
-                    </nav>
+                    </StyledNav>
                     <div className="search-area">
+                        <StyledCenteredDiv><a href="/" className="logo"> <i className="book icon"></i> Geeks' Bookstore </a></StyledCenteredDiv>
                         <div className="search-form">
                             <span className="search-dropdown">
                             <select>
@@ -96,8 +130,8 @@ export default function(props) {
                             <button>Search</button>
                         </div>
                     </div>
-                    <div className="cart-bar">
-                        <ul>
+                    <StyledNav className="cart-bar">
+                        <ul style={{paddingLeft:"0px"}}>
                             <li className="categories-dropdown"  onMouseLeave={() => setArrowDirection("down")}>
                                 <div onMouseEnter={() => setArrowDirection("up")}>Shop by category <i className={`angle ${arrowDirection} icon`}/></div>
 
@@ -120,7 +154,7 @@ export default function(props) {
                             <li> C$0.00 </li>
                             <li> 0 </li>
                         </ul>
-                    </div>
+                    </StyledNav>
                 </header>
 
 
@@ -136,4 +170,22 @@ export default function(props) {
             </Fragment>
         );
 
+}
+
+
+function SignInOrJoinPopUp({ showLoginPopup }) : JSX.Element {
+    return (
+        <Popup 
+            hoverable
+            trigger={<a><i className="user icon"/>Sign In/Join</a>}
+            on={["click","hover"]}
+            content={
+                <div style={{display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column"}}>
+                    <Button style={{marginBottom:"5px"}} onClick={showLoginPopup}> Sign In </Button>
+                    <div> New Customer ? <a> Click here </a></div>
+                </div>
+            }
+            >
+        </Popup>
+    );
 }

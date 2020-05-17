@@ -15,6 +15,7 @@ import UserContext from '../context/userContext';
 
 import Auth from '../api/authenticationStorage';
 
+
 const LoadingComponent = () => <h3>please wait...</h3>;
 
 const AsyncHome = loadable({
@@ -25,7 +26,18 @@ const AsyncHome = loadable({
 const AsyncProduct = loadable({
     loader: () => import('./Product'),
     loading: LoadingComponent
-})
+});
+
+const AsyncSignin : JSX.Element = loadable({
+    loader: () => import('../components/login/login'),
+    loading: LoadingComponent
+});
+
+const AsyncRegistration : JSX.Element = loadable({
+    loader: () => import('../components/signup/signup'),
+    loading: LoadingComponent
+});
+
 
 export interface IAppContext {
     username: string
@@ -62,6 +74,8 @@ export default class App extends React.Component<{},IAppContext>{
                         <Switch>
                             <Route exact path="/" component={AsyncHome}></Route>
                             <Route path="/product/:id" component={AsyncProduct}></Route>
+                            <Route path="/register" component={AsyncRegistration}></Route>
+                            <Route path="/signin" component={AsyncSignin}></Route>
                         </Switch>
 
 
