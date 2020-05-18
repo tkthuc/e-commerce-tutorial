@@ -40,21 +40,21 @@ public class TokenAuthConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.
-                csrf().disable()
+                csrf().disable();
                 // make sure we use stateless session; session won't be used to store user's state.
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//              .and()
                 // handle an authorized attempts
-                .exceptionHandling().authenticationEntryPoint((req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
-                .and()
+//                .exceptionHandling().authenticationEntryPoint((req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
+//                .and()
                 // Add a filter to validate the tokens with every request
                // .addFilterBefore(new TokenAuthenticationFilter(jwtConfig), UsernamePasswordAuthenticationFilter.class)
                 // authorization requests config
-                .authorizeRequests()
+//                .authorizeRequests()
                 // allow all who are accessing "auth" service
-                .antMatchers(HttpMethod.POST, jwtTokenRequest).permitAll()
-                .antMatchers(HttpMethod.GET, "/actuator/health", "/getSecretKey").permitAll()
-                .anyRequest().authenticated();
+//                .antMatchers(HttpMethod.POST, jwtTokenRequest).permitAll()
+//                .antMatchers(HttpMethod.GET, "/actuator/health", "/getSecretKey").permitAll()
+//                .anyRequest().authenticated();
     }
 
 

@@ -12,6 +12,8 @@ module.exports = proxy(getHost,{
     memoizeHost: false,
     proxyReqPathResolver: function (req) {        
        console.log(`${endpoints.getServiceLocationPath("authentication-service")}`)
-       return req.baseUrl;
+       let updatedPath = req.originalUrl.replace('/user/','/');
+       console.log(updatedPath);
+       return updatedPath;
     }
 });

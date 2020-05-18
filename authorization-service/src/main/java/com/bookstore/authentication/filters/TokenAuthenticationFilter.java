@@ -28,6 +28,7 @@ public class TokenAuthenticationFilter  extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain)
             throws ServletException, IOException{
+
         String header = httpServletRequest.getHeader(jwtConfig.getHeader());
 
         if(header == null || !header.startsWith(jwtConfig.getPrefix())){

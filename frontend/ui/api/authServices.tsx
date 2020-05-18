@@ -2,10 +2,12 @@ import axios, {AxiosPromise} from 'axios';
 
 const AuthServices : AuthServicesInterface = {
     login: ({email, password}) => {
-        return axios.post("/authenticate", {email, password});
+        return axios.post("/user/authenticate", {email, password});
     },
     signup: ({email, username, password}) => {
-        return axios.post("/user",{email, username, password} );
+        return axios.post("/user/register",{email, username, password} )
+                    .then(resp => resp)
+                    .catch(error => Promise.reject(error.response));
     }
 }
 

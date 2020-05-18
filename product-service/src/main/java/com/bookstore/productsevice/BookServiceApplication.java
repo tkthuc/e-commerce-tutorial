@@ -24,6 +24,7 @@ import org.springframework.retry.annotation.Retryable;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.ConnectException;
 import java.net.URI;
 import java.util.List;
 
@@ -55,7 +56,7 @@ public class BookServiceApplication {
 
 
     @Bean
-    @Retryable(value = RestClientException.class, maxAttempts = 4, backoff = @Backoff(delay = 5000))
+    @Retryable( value =  { ConnectException.class }, maxAttempts = 4, backoff = @Backoff(delay = 5000))
     public CommandLineRunner setSecretKey() {
         return new CommandLineRunner() {
             @Override

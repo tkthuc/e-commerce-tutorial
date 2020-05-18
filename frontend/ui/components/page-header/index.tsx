@@ -6,8 +6,10 @@ import './cart-bar.css';
 import Login from '../login/login';
 import Modal from '../modal/modal';
 
-import {useState} from "react";
-import {Fragment} from "react";
+import { useState, Fragment } from "react";
+
+
+import { Link } from 'react-router-dom';
 
 import UserContext from '../../context/userContext';
 
@@ -182,7 +184,12 @@ function SignInOrJoinPopUp({ showLoginPopup }) : JSX.Element {
             content={
                 <div style={{display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column"}}>
                     <Button style={{marginBottom:"5px"}} onClick={showLoginPopup}> Sign In </Button>
-                    <div> New Customer ? <a> Click here </a></div>
+                    <div>
+                        New Customer ? 
+                        <Link to="/register"  style={{cursor:"pointer", marginLeft:"1em"}}>                           
+                            Click here                          
+                        </Link>
+                    </div>
                 </div>
             }
             >

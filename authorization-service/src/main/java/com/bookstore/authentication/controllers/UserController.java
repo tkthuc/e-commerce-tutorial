@@ -62,8 +62,9 @@ public class UserController {
 
 
 
-    @PostMapping(value="/user")
+    @PostMapping(value="/register")
     public ResponseEntity<User> createUser(@RequestBody UserForm userForm) throws Exception {
+
         userFormValidator.validate(userForm);
         User user = new User();
         user.setEncrytedPassword(passwordEncoder.encode(userForm.getPassword()))
@@ -72,6 +73,9 @@ public class UserController {
                 .setFirstName(userForm.getFirstName())
                 .setLastName(userForm.getLastName())
                 .setGender(userForm.getGender());
+        if(userForm.getRole() == null) {
+               user.setRole("user");
+        }
 
         User createdUser = userRepository.save(user);
         return new ResponseEntity<>(createdUser, HttpStatus.OK);

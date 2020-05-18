@@ -14,6 +14,7 @@ services:
     - spring.cloud.consul.enabled=true
     ports:
     - "8080:8080" #need to remove exposed port in production
+    - "8000:8000" #debug port
     depends_on:
     - mongodb
     - consul
@@ -25,6 +26,7 @@ services:
     - spring.cloud.consul.enabled=true
     ports:
     - "8081:8081" #need to remove exposed port in production
+    - "8001:8000" #debug
     depends_on:
     - mongodb
     - consul
