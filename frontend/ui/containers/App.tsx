@@ -28,12 +28,12 @@ const AsyncProduct = loadable({
     loading: LoadingComponent
 });
 
-const AsyncSignin : JSX.Element = loadable({
+const AsyncSignin = loadable({
     loader: () => import('../components/login/login'),
     loading: LoadingComponent
 });
 
-const AsyncRegistration : JSX.Element = loadable({
+const AsyncRegistration = loadable({
     loader: () => import('../components/signup/signup'),
     loading: LoadingComponent
 });

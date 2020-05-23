@@ -36,16 +36,34 @@ var server = http.createServer(app);
  */
 
 server.listen(port, function(){
-    if(process.env.NODE_ENV == 'production') {
-        var watcher = consul.watch({
-            method: consul.health.service,
-            options: {
-                service: 'product-service',
-                passing: true
-            }
-        }, function (error, data) {
-            console.log(error);
-        });
+    if(process.env.NODE_ENV == 'production') {        
+
+        var services = ['product-service', 'authentication-service'];
+
+        services.map(
+                service => {
+                  return consul.watch({
+                    method: consul.health.service,
+                    options: {
+                        service: service,
+                        passing: true
+                    }
+                  }, function (error, data) {
+                      console.log(error);
+                  })
+                }
+              ).forEach(watcher => {
+                watcher.on('change', (data, res) => {
+                    console.log('received discovery update:', data.length);
+        
+                    data.forEach(({Service}) => {
+                        console.log({address: Service.Address, port: Service.Port})
+                        serviceLocation.setServiceLocation(Service.Service, {address: Service.Address, port: Service.Port});
+                    });
+                });
+            });
+
+       
 
         //list all services managed by consul - no need
         consul.agent.service.list(function (err, result) {
@@ -63,14 +81,7 @@ server.listen(port, function(){
         });
 
 
-        watcher.on('change', (data, res) => {
-            console.log('received discovery update:', data.length);
-
-            data.forEach(({Service}) => {
-                console.log({address: Service.Address, port: Service.Port})
-                serviceLocation.setServiceLocation(Service.Service, {address: Service.Address, port: Service.Port});
-            });
-        });
+        
     }
 
 });

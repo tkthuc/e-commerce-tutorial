@@ -9,7 +9,7 @@ import Modal from '../modal/modal';
 import { useState, Fragment } from "react";
 
 
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import UserContext from '../../context/userContext';
 
@@ -39,6 +39,8 @@ export default function(props) {
 
         let tabs = ["Book for you", "Bestsellers", "New Release"];
 
+        let history = useHistory();
+
         let topCategories = ["Art & Photography","Children Books","Craft and Hobbies" ]
 
         let [arrowDirection,setArrowDirection] = useState<string>("down");
@@ -61,26 +63,12 @@ export default function(props) {
                 <header className="site-header">
                     <StyledNav className="navbar">
                         <ul className="left-nav">                           
-                            <li><a href="/" className="contact"> <i className="envelope icon"></i> Contact us </a></li>
-                            <li><a href="/" className="help"> <i className="info circle icon"/>  Help</a></li>
+                            <li><a className="contact"> <i className="envelope icon"></i> Contact us </a></li>
+                            <li><a className="help"> <i className="info circle icon"/>  Help</a></li>
                         </ul>
 
 
-                        <ul className="right-nav">
-                            <li>
-                                <a>
-                                    <i className="language icon">
-                                    </i>
-                                    {language}
-                                </a>
-                                <div className="header-dropdown">
-                                    {
-                                        languages.map(language => {
-                                            return <a onClick={() => setLanguage(language)}>  {language} </a>
-                                        })
-                                    }
-                                </div>
-                            </li>
+                        <ul className="right-nav">                           
                             <li> <a className="order_status"> <i className="compass icon"/>Order Status </a></li>
                             <li> <a> <i className="heart outline icon"/> Wishlist </a></li>
                             <li>
@@ -104,10 +92,9 @@ export default function(props) {
                                             </Menu.Item>
 
                                             <Menu.Item
-                                                name='logout'                                              
-                                                onClick={() => setUsername(null)}
+                                                name='logout'                                                                                              
                                                 >
-                                                <StyledLinkHovered> Log out </StyledLinkHovered>
+                                                <StyledLinkHovered onClick={() => setUsername(null)}> Log out </StyledLinkHovered>
                                             </Menu.Item>
                                          </Menu>
                                     </Popup>                               
@@ -117,7 +104,9 @@ export default function(props) {
                         </ul>
                     </StyledNav>
                     <div className="search-area">
-                        <StyledCenteredDiv><a href="/" className="logo"> <i className="book icon"></i> Geeks' Bookstore </a></StyledCenteredDiv>
+                        <StyledCenteredDiv>
+                            <Link to="/" className="logo"> <i className="book icon"></i> Geeks' Bookstore </Link>
+                        </StyledCenteredDiv>
                         <div className="search-form">
                             <span className="search-dropdown">
                             <select>
@@ -130,7 +119,7 @@ export default function(props) {
 
                             <input className="search-input" type="text" name="search_input"/>
                             <button>Search</button>
-                        </div>
+                        </div>                        
                     </div>
                     <StyledNav className="cart-bar">
                         <ul style={{paddingLeft:"0px"}}>
@@ -165,6 +154,7 @@ export default function(props) {
                         callback={({email}) => {
                             setUsername(email);
                             setLoginPopupVisibility(false);
+                            history.push("/");
                         }}
                     />
                 }

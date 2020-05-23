@@ -3,15 +3,12 @@ spring:
     mongodb:
       port: ${mongo_port:27017}
       host: mongodb
-      database: products
   application:
-    name: product-service
+    name: cart-service
 
 
 logging:
   level:
     org.springframework.cloud.consul: INFO
 server:
-  port: 8080
-
-
+  port: 8085

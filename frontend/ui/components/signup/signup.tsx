@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Formik, Field, ErrorMessage } from 'formik';
+import { Formik, Field, ErrorMessage, Form } from 'formik';
 import { Button, Message } from 'semantic-ui-react';
 
 import './signup.css';
@@ -20,6 +20,8 @@ export interface User {
     password: string;
 
 }
+
+const FormAny = Form as any;
 
 const StyledInputDiv = styled.div`
         display: flex;
@@ -78,7 +80,7 @@ export default function() : JSX.Element {
                 >
                 {
                     ({isSubmitting, handleSubmit}) => (
-                        <form onSubmit={ (event) => {                         
+                        <FormAny onSubmit={ (event) => {                         
                                 handleSubmit(event);
                                 event.preventDefault();
                             }}
@@ -106,7 +108,7 @@ export default function() : JSX.Element {
                             </div>
                         
                             <Button type="Submit" disabled={isSubmitting}> Submit </Button>                      
-                        </form>
+                        </FormAny>
                     )
                 }           
             </Formik>       

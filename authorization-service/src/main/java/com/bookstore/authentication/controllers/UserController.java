@@ -1,12 +1,15 @@
 package com.bookstore.authentication.controllers;
 
+import com.bookstore.authentication.configs.JwtConfig;
 import com.bookstore.authentication.encoders.PasswordEncoder;
 import com.bookstore.authentication.exceptions.AuthenticationException;
-import com.bookstore.authentication.forms.UserForm;
+import com.bookstore.authentication.exceptions.InvalidUserIdException;
 import com.bookstore.authentication.model.User;
 import com.bookstore.authentication.repository.UserRepository;
 import com.bookstore.authentication.utils.JwtTokenUtil;
-import com.bookstore.authentication.validators.UserFormValidator;
+import com.bookstore.authentication.validators.UserValidator;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +17,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,12 +27,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -48,7 +48,7 @@ public class UserController {
     PasswordEncoder passwordEncoder;
 
     @Autowired
-    UserFormValidator userFormValidator;
+    UserValidator userValidator;
 
     @Autowired
     @Qualifier("customJwtUserDetailsService")
@@ -60,20 +60,19 @@ public class UserController {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
+    @Autowired
+    private JwtConfig jwtConfig;
 
 
     @PostMapping(value="/register")
-    public ResponseEntity<User> createUser(@RequestBody UserForm userForm) throws Exception {
+    public ResponseEntity<User> createUser(@RequestBody User user) throws Exception {
 
-        userFormValidator.validate(userForm);
-        User user = new User();
-        user.setEncrytedPassword(passwordEncoder.encode(userForm.getPassword()))
-                .setEmail(userForm.getEmail())
-                .setUsername(userForm.getUsername())
-                .setFirstName(userForm.getFirstName())
-                .setLastName(userForm.getLastName())
-                .setGender(userForm.getGender());
-        if(userForm.getRole() == null) {
+        userValidator.validate(user);
+
+        user.setEncrytedPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(null);
+
+        if(user.getRole() == null) {
                user.setRole("user");
         }
 
@@ -81,9 +80,52 @@ public class UserController {
         return new ResponseEntity<>(createdUser, HttpStatus.OK);
     }
 
-    @GetMapping(value="/user/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable String id) {
-        return new ResponseEntity<>(userRepository.findByUserId(id),HttpStatus.OK);
+    @GetMapping(value="/{username}")
+    public ResponseEntity<User> getUserById(@PathVariable String username) {
+        return new ResponseEntity<>(userRepository.findFirstByUsername(username),HttpStatus.OK);
+    }
+
+    @PostMapping(value="/update")
+    public ResponseEntity<User> updateUserInfo(@RequestBody User user, @RequestHeader(value = "Authorization") String bearer) throws Exception {
+
+
+        if(bearer == null || bearer.indexOf("Bearer") == -1) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        String token = bearer.replace("Bearer", "");
+
+
+        Claims claims = Jwts.parser()
+                .setSigningKey(jwtConfig.getSecret().getBytes())
+                .parseClaimsJws(token)
+                .getBody();
+
+        String username = claims.getSubject();
+
+        if(!username.equals(user.getEmail())) {
+            throw new InvalidUserIdException("Email is not matched");
+        }
+
+
+        User currentUser = userRepository.findFirstByEmail(user.getEmail());
+
+        if(currentUser == null) {
+            throw new InvalidUserIdException("No user is associated with this email");
+        }
+
+        currentUser.setEmail(user.getEmail())
+                    .setGender(user.getGender())
+                    .setAddresses(user.getAddresses())
+                    .setLastName(user.getLastName())
+                    .setPhoneNumber(user.getPhoneNumber())
+                    .setFirstName(user.getFirstName());
+
+
+        User response = userRepository.save(currentUser);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+
     }
 
     @GetMapping(value="/users")
@@ -93,7 +135,7 @@ public class UserController {
 
 
     @PostMapping(value = "${jwt.get.token.uri}")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody UserForm authenticationRequest, HttpServletResponse response)
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody User authenticationRequest, HttpServletResponse response)
             throws AuthenticationException {
 
         logger.info("Starting to debug user "+authenticationRequest.getEmail());

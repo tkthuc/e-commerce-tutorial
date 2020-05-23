@@ -56,10 +56,12 @@ public class BookServiceApplication {
 
 
     @Bean
-    @Retryable( value =  { ConnectException.class }, maxAttempts = 4, backoff = @Backoff(delay = 5000))
+
     public CommandLineRunner setSecretKey() {
+
         return new CommandLineRunner() {
             @Override
+            @Retryable( value =  { ConnectException.class }, maxAttempts = 4, backoff = @Backoff(delay = 5000))
             public void run(String... args) throws Exception {
                 logger.info("Consul Demo - Getting Secret Key");
 

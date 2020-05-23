@@ -3,31 +3,31 @@ package com.bookstore.authentication.validators;
 import com.bookstore.authentication.exceptions.EmailNotAvailableException;
 import com.bookstore.authentication.exceptions.InvalidEmailException;
 import com.bookstore.authentication.exceptions.UsernameNotAvailableException;
-import com.bookstore.authentication.forms.UserForm;
 import com.bookstore.authentication.model.User;
 import com.bookstore.authentication.repository.UserRepository;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
 
 import java.util.List;
 
 
 @Component
-public class UserFormValidator {
+public class UserValidator {
 
+    private UserRepository userRepository;
 
     @Autowired
-    UserRepository userRepository;
+    public UserValidator(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     private EmailValidator emailValidator = EmailValidator.getInstance();
 
 
 
 
-    public void validate(UserForm user) throws Exception {
+    public void validate(User user) throws Exception {
 
 
         if(!emailValidator.isValid(user.getEmail())) {
