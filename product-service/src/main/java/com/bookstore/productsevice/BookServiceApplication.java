@@ -16,6 +16,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.retry.annotation.Backoff;
@@ -49,6 +50,8 @@ public class BookServiceApplication {
     @Autowired
     DiscoveryClient discoveryClient;
 
+    @Autowired
+    Environment environment;
 
     public static void main(String[] args) {
         SpringApplication.run(BookServiceApplication.class, args);
@@ -61,17 +64,25 @@ public class BookServiceApplication {
 
         return new CommandLineRunner() {
             @Override
-            @Retryable( value =  { ConnectException.class }, maxAttempts = 4, backoff = @Backoff(delay = 5000))
+            @Retryable(backoff = @Backoff(delay = 5000))
             public void run(String... args) throws Exception {
                 logger.info("Consul Demo - Getting Secret Key");
 
                 List<ServiceInstance> instances = discoveryClient.getInstances("authentication-service");
+
+                for(String profile : environment.getActiveProfiles()) {
+                    if(profile.equals("test")) {
+                        return;
+                    }
+                }
 
                 if (instances != null && instances.size() > 0 ) {
                     URI uri = new URI(instances.get(0).getUri().toString() +  "/getSecretKey");
                     ResponseEntity<Secret> response  = restTemplate.getForEntity(uri,Secret.class);
                     logger.info("Response Received as " + response + " -  ");
                     secret.setKey(response.getBody().key);
+                } else {
+                    throw new ConnectException();
                 }
 
                 return;

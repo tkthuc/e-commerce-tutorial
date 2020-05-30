@@ -15,7 +15,7 @@
     list-style: none;
   }
 
-  li {
+  li:not(:first-child) {
     padding-left: 10px;
   }
   & > ul:first-child {

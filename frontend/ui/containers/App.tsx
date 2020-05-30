@@ -38,6 +38,10 @@ const AsyncRegistration = loadable({
     loading: LoadingComponent
 });
 
+const AsyncProfile = loadable({
+    loader: () => import('../components/profile/profile'),
+    loading: LoadingComponent
+});
 
 export interface IAppContext {
     username: string
@@ -76,6 +80,7 @@ export default class App extends React.Component<{},IAppContext>{
                             <Route path="/product/:id" component={AsyncProduct}></Route>
                             <Route path="/register" component={AsyncRegistration}></Route>
                             <Route path="/signin" component={AsyncSignin}></Route>
+                            <Route path="/profile" component={AsyncProfile}></Route>
                         </Switch>
 
 

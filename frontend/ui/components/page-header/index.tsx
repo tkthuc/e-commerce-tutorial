@@ -88,12 +88,12 @@ export default function(props) {
                                             <Menu.Item
                                                 name='profile'                                             
                                                 >
-                                                <StyledLinkHovered> Your Profile </StyledLinkHovered>                                                
+                                                 <StyledLinkHovered onClick={() => history.push('/profile')}> My Profile </StyledLinkHovered>                                       
                                             </Menu.Item>
 
                                             <Menu.Item
                                                 name='logout'                                                                                              
-                                                >
+                                                >                                               
                                                 <StyledLinkHovered onClick={() => setUsername(null)}> Log out </StyledLinkHovered>
                                             </Menu.Item>
                                          </Menu>
