@@ -4,6 +4,9 @@ package com.bookstore.productsevice.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,63 +14,10 @@ import javax.annotation.Generated;
 
 @Document
 @Data
+@Getter
+@Setter
+@Accessors(chain = true)
 public class Book {
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public double getPriceUsd() {
-        return priceUsd;
-    }
-
-    public void setPriceUsd(double priceUsd) {
-        this.priceUsd = priceUsd;
-    }
-
-    public String getPicture() {
-        return picture;
-    }
-
-    public void setPicture(String picture) {
-        this.picture = picture;
-    }
-
-    public String[] getCategories() {
-        return categories;
-    }
-
-    public void setCategories(String[] categories) {
-        this.categories = categories;
-    }
-
-    public String[] getAuthors() {
-        return authors;
-    }
-
-    public void setAuthors(String[] authors) {
-        this.authors = authors;
-    }
-
 
     @Id
     private String id;
@@ -79,15 +29,21 @@ public class Book {
     private String[] categories;
     private String[] authors;
 
+
+    private double rating;
+
     public Book(){};
 
-    public Book(String name, String description, double priceUsd, String picture, String[] categories, String[] authors) {
+
+    public Book(String name, String description, double priceUsd, String picture, String[] categories, String[] authors, double rating) {
         this.name = name;
         this.description = description;
         this.priceUsd = priceUsd;
         this.picture = picture;
         this.categories = categories;
         this.authors = authors;
+        this.rating = rating;
+
     }
 
     public static class Builder {
@@ -98,6 +54,7 @@ public class Book {
         private String picture;
         private String[] categories;
         private String[] authors;
+        private double rating;
 
         public Builder setName(String name) {
             this.name = name;
@@ -129,12 +86,17 @@ public class Book {
             return this;
         }
 
+        public Builder setRating(double rating) {
+            this.rating = rating;
+            return this;
+        }
+
         public Builder() {
 
         }
 
         public Book build() {
-            return new Book(name, description, priceUsd, picture, categories, authors);
+            return new Book(name, description, priceUsd, picture, categories, authors , rating);
         }
     }
 

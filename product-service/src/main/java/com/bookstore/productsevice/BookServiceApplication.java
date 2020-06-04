@@ -100,7 +100,9 @@ public class BookServiceApplication {
                         .setPriceUsd(100)
                         .setDescription("Great adventures of little hobbit")
                         .setPicture("air-plant.jpg")
-                        .setCategories(new String[]{"fiction"}).build();
+                        .setCategories(new String[]{"fiction"})
+                        .setRating(5)
+                        .build();
                 repository.findAllByName(bookA.getName()).forEach(
                         book -> {
                             repository.delete(book);
@@ -113,7 +115,9 @@ public class BookServiceApplication {
                         .setPriceUsd(150)
                         .setPicture("barista-kit.jpg")
                         .setDescription("The tragic life of the mafia bosses")
-                        .setCategories(new String[]{"fiction"}).build();
+                        .setCategories(new String[]{"fiction"})
+                        .setRating(8)
+                        .build();
                 repository.findAllByName(bookB.getName()).forEach(
                         book -> {
                             repository.delete(book);
@@ -126,6 +130,7 @@ public class BookServiceApplication {
                         .setDescription("How to create wars and win them")
                         .setPriceUsd(40.5)
                         .setPicture("camera-lens.jpg")
+                        .setRating(3)
                         .setCategories(new String[]{"non-fiction"}).build();
                 repository.findAllByName(bookC.getName()).forEach(
                         book -> {
@@ -133,6 +138,20 @@ public class BookServiceApplication {
                         }
                 );
                 repository.save(bookC);
+                Book bookD = new Book.Builder().setName("Fundamentals of Business")
+                        .setAuthors(new String[]{"Michael Scott"})
+                        .setPriceUsd(45)
+                        .setDescription("Biography of world's best boss")
+                        .setPicture("film-camera.jpg")
+                        .setCategories(new String[]{"fiction"})
+                        .setRating(2)
+                        .build();
+                repository.findAllByName(bookD.getName()).forEach(
+                        book -> {
+                            repository.delete(book);
+                        }
+                );
+                repository.save(bookD);
             }
         };
 

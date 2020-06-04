@@ -80,7 +80,7 @@ export default class App extends React.Component<{},IAppContext>{
                             <Route path="/product/:id" component={AsyncProduct}></Route>
                             <Route path="/register" component={AsyncRegistration}></Route>
                             <Route path="/signin" component={AsyncSignin}></Route>
-                            <Route path="/profile" component={AsyncProfile}></Route>
+                            <Route path="/profile" render={ (props) => <AsyncProfile {...props} email="admin@gmail.com"></AsyncProfile>}></Route>
                         </Switch>
 
 

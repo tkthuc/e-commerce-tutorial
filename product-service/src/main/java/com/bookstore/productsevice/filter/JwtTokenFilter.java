@@ -5,6 +5,8 @@ import com.bookstore.productsevice.security.Secret;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +28,9 @@ public class JwtTokenFilter implements Filter {
     @Autowired
     Secret secret;
 
+    @Autowired
+    Environment environment;
+
     public boolean shouldRequestAuthenticated(String url) {
         if(url.indexOf("/products/") == -1) {
             return false;
@@ -38,6 +43,15 @@ public class JwtTokenFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws ServletException,IOException {
+
+
+        for(String profile : environment.getActiveProfiles()) {
+            if(profile.equals("test")) {
+                filterChain.doFilter(servletRequest,servletResponse);
+                return;
+            }
+        }
+
         String header = ((HttpServletRequest)servletRequest).getHeader("Authorization");
 
         if(!shouldRequestAuthenticated(((HttpServletRequest)servletRequest).getRequestURI())) {
