@@ -2,15 +2,13 @@ import * as React from 'react';
 
 import styled from 'styled-components';
 
-import { Formik } from 'formik';
-
 import './profile.css';
 
 import UserProfileServices from '../../api/userProfileServices';
 import { UserProfile, UserSection } from '../../api/user-type';
 
 import Section from './section/section';
-import profileReducer from './profileReducer';
+import profileReducer, { UPDATE } from './profileReducer';
 
 
 
@@ -52,27 +50,24 @@ export default function({ email }) {
                     <ul>
                         <li> <StyledLink> My Personal Settings </StyledLink> </li>
                     </ul>
-                </div>
-                <Formik
-                    initialValues= {userData}
-                    onSubmit={() => {}}
-                    >
+                </div>                
+                   
+                <div className="profile__settings">
                     {
-                            ({ 
-                                isSubmitting, 
-                                handleSubmit, 
-                            }) => 
-                                <div className="profile__settings">
-                                    {
-                                        userData.settings.data.map(
-                                            userProfile => (
-                                                    <Section userProfile={userProfile}></Section>
-                                            ) 
-                                        )
-                                    }
-                                </div>
+                        userData.settings.data.map(
+                            (userProfile, index) => (
+                                    <Section userProfile={userProfile} key={`${userProfile.header}.${index}`} 
+                                            onSave={ 
+                                                (values) => dispatchUserData({
+                                                    type: UPDATE, 
+                                                    payload: values
+                                                })
+                                            }/>                                
+                            ) 
+                        )
                     }
-                </Formik>
+                </div>
+                 
             </div>
         </div>
     );

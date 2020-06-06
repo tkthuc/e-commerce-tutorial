@@ -1,10 +1,10 @@
 export enum FieldType {
-    TEXT,
-    DROPDOWN,
-    CHECKBOX,
-    TEXT_AREA,
-    EMAIL,
-    PASSWORD
+    TEXT = 'text',
+    DROPDOWN = 'select',
+    CHECKBOX = 'checkbox',
+    TEXT_AREA = 'text-area',
+    EMAIL='email',
+    PASSWORD='password'
 }
 
 export interface UserSection {

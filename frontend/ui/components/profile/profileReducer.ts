@@ -5,7 +5,7 @@ export const REPLACE_ALL = "REPLACE_ALL";
 
 const reducer = (state: UserProfile , action : { type: string, payload: any}) : UserProfile => {
     switch (action.type) {
-        case "UPDATE" :
+        case UPDATE :
             const { header, data }  = action.payload;
             const { settings } = state;
             const replacedSectionIndex = settings.data.findIndex(section => section.header === header);
