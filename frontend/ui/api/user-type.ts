@@ -4,11 +4,13 @@ export enum FieldType {
     CHECKBOX = 'checkbox',
     TEXT_AREA = 'text-area',
     EMAIL='email',
-    PASSWORD='password'
+    PASSWORD='password',  
 }
 
 export interface UserSection {
     header: string,
+    allowMany?: boolean,
+    path?: string,
     data: {
       
             label: string,
@@ -19,9 +21,12 @@ export interface UserSection {
 }
 
 export interface UserProfile {
-    email: string,
-    settings: {
-        header: string;
-        data: UserSection[]
-    }
+    "userId": string,
+    "username": string,
+    "firstName": string,
+    "lastName": string,
+    "gender": string,
+    "email": string,
+    "phoneNumber": string,
+    "address": any,    
 }

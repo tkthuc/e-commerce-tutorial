@@ -2,7 +2,10 @@ package com.bookstore.authentication;
 
 import com.bookstore.authentication.encoders.PasswordEncoder;
 import com.bookstore.authentication.encoders.PasswordEncoderImpl;
+import com.bookstore.authentication.model.Country;
+import com.bookstore.authentication.model.Gender;
 import com.bookstore.authentication.model.User;
+import com.bookstore.authentication.repository.LookupRepository;
 import com.bookstore.authentication.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +27,9 @@ public class BookstoreAuthenticationApplication {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    LookupRepository lookupRepository;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -55,6 +61,19 @@ public class BookstoreAuthenticationApplication {
 
                 User createdUser = userRepository.save(user);
                 logger.info("Dummy user has id as "+createdUser.getUserId());
+
+                lookupRepository.deleteAllByGroupId("country");
+                lookupRepository.deleteAllByGroupId("gender");
+
+                lookupRepository.save(new Country("CA", "Canada", "North America"));
+                lookupRepository.save(new Country("US", "United States", "North America"));
+                lookupRepository.save(new Country("VN", "Vietnam", "South East Asia"));
+                lookupRepository.save(new Country("DE", "Germany", "Europe"));
+
+                lookupRepository.save(new Gender("M", "Male"));
+                lookupRepository.save(new Gender("F", "Female"));
+                lookupRepository.save(new Gender("U", "Unknown"));
+
             }
         };
     }

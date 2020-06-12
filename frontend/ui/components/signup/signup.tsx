@@ -88,8 +88,8 @@ export default function() : JSX.Element {
                             <h1> Create account </h1>
                             <div className = "field-section">
                                 <StyledInputDiv>
-                                    <label htmlFor ="name"> Your username</label>                        
-                                    <Field type="text" name="name" className="input"/>                           
+                                    <label htmlFor ="username"> Your username</label>                        
+                                    <Field type="text" name="username" className="input"/>                           
                                 </StyledInputDiv>
                             </div>
                             <div className = "field-section">

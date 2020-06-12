@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
@@ -81,11 +82,11 @@ public class UserController {
     }
 
     @GetMapping(value="/{username}")
-    public ResponseEntity<User> getUserById(@PathVariable String username) {
+    public ResponseEntity<User> getUserByName(@PathVariable String username) {
         return new ResponseEntity<>(userRepository.findFirstByUsername(username),HttpStatus.OK);
     }
 
-    @PostMapping(value="/update")
+    @PutMapping
     public ResponseEntity<User> updateUserInfo(@RequestBody User user, @RequestHeader(value = "Authorization") String bearer) throws Exception {
 
 
@@ -103,8 +104,8 @@ public class UserController {
 
         String username = claims.getSubject();
 
-        if(!username.equals(user.getEmail())) {
-            throw new InvalidUserIdException("Email is not matched");
+        if(!username.equals(user.getUsername())) {
+            throw new InvalidUserIdException("Username is not matched");
         }
 
 
@@ -116,7 +117,7 @@ public class UserController {
 
         currentUser.setEmail(user.getEmail())
                     .setGender(user.getGender())
-                    .setAddresses(user.getAddresses())
+                    .setAddress(user.getAddress())
                     .setLastName(user.getLastName())
                     .setPhoneNumber(user.getPhoneNumber())
                     .setFirstName(user.getFirstName());
@@ -138,12 +139,12 @@ public class UserController {
     public ResponseEntity<?> createAuthenticationToken(@RequestBody User authenticationRequest, HttpServletResponse response)
             throws AuthenticationException {
 
-        logger.info("Starting to debug user "+authenticationRequest.getEmail());
-        authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
+        logger.info("Starting to debug user "+authenticationRequest.getUsername());
+        authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
 
         final UserDetails userDetails = userDetailsService
-                .loadUserByUsername(authenticationRequest.getEmail());
+                .loadUserByUsername(authenticationRequest.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);
         return new ResponseEntity<>(token, HttpStatus.OK);
 

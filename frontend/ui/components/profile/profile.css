@@ -38,12 +38,15 @@
 }
 
 .profile__fieldname {
-    font-size: larger;
+    font-size: 1.2em;
     color: black;
+    font-weight: bold;
+    margin-bottom: 0.5em;
 }
 
 .profile__fieldvalue {
     font-size: initial;
+    color: #5f7279
 }
 
 .profile__field {

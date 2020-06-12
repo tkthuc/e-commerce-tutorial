@@ -23,10 +23,10 @@ public class User {
     private String lastName;
     private Gender gender;
     private String email;
-    private PhoneNumber phoneNumber;
+    private String phoneNumber;
 
-    @JsonProperty(value = "addresses")
-    private List<Address> addresses;
+    @JsonProperty(value = "address")
+    private Address address;
 
     private String role;
 

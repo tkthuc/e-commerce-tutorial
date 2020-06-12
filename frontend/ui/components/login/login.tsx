@@ -13,7 +13,7 @@ import AuthStorage from '../../api/authenticationStorage';
 export default function(props) {
 
     let [credentials, setCredentials] = useState({
-        email: "",
+        username: "",
         password: ""
     });
 
@@ -25,7 +25,7 @@ export default function(props) {
        try {
            const jwt = await AuthServices.login(credentials);
 
-           AuthStorage.authenticateUser(jwt.data as any, credentials.email);
+           AuthStorage.authenticateUser(jwt.data as any, credentials.username);
 
            props.callback && props.callback(credentials);
        } catch (e) {
@@ -42,7 +42,7 @@ export default function(props) {
 
         <form className="login" onSubmit={handleSubmit}>
             <h1>Sign in</h1>
-            <div className="user-input-row"> <label>Email </label> <input type="email" name="email" value={credentials.email} onChange={handleChange}/></div>
+            <div className="user-input-row"> <label>Username </label> <input type="text" name="username" value={credentials.username} onChange={handleChange}/></div>
             <div className="user-input-row"> <label>Password </label> <input type="password" name="password" value={credentials.password} onChange={handleChange}/> </div>
             {
                 errorMessage && <Message color='red'>{errorMessage}</Message>

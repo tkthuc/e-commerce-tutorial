@@ -2,20 +2,17 @@ package com.bookstore.authentication.model;
 
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
-public class Country {
+public class Country extends Lookup {
 
-    private String countryCode;
-    private String countryName;
+    private String region;
 
-    public Country(String countryCode, String countryName) {
-        this.countryCode = countryCode;
-        this.countryName = countryName;
+    public Country(String code, String label, String region) {
+        super(code, label, "country");
+        this.region = region;
     }
 
 }

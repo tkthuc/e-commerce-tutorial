@@ -3,7 +3,10 @@ import * as React from 'react';
 import styled from 'styled-components';
 
 import { Formik, Field, FieldArray } from 'formik';
-import { FieldType, UserSection } from 'api/user-type';
+import { FieldType, UserSection } from '../../../api/user-type';
+import Dropdown from '../../../components/dropdown/dropdown';
+import { Lookup } from 'api/lookupServices';
+import { Input, Button } from 'semantic-ui-react';
 
 
 
@@ -48,6 +51,7 @@ export interface SectionProps {
 export default function({ userProfile, onSave } : SectionProps) : JSX.Element {
 
     let [editMode, setEditMode] = React.useState(false);
+    
     return (
 
         <Formik
@@ -56,9 +60,10 @@ export default function({ userProfile, onSave } : SectionProps) : JSX.Element {
                 onSave(values);
                 setEditMode(false);
             }}
+            enableReinitialize= { true }
         >
             {
-                ({ handleSubmit, values, resetForm }) => (
+                ({ handleSubmit, values, resetForm, setFieldValue }) => (
                     <form className="profile__section" 
                           onSubmit={
                               (event) => {
@@ -79,10 +84,8 @@ export default function({ userProfile, onSave } : SectionProps) : JSX.Element {
                                         return (
                                                 <div className="profile__field" key={`${values.header}.${index}`}>
                                                     <div className="profile__fieldname"> {label} </div>
-                                                    {
-                                                    editMode                                    
-                                                        ? <Field name={`data.${index}.value`} type='text'></Field>  
-                                                        : <div className="profile__fieldvalue"> {value} </div> 
+                                                    {                                                                                  
+                                                         getFieldComponent({ value, name, label, type},`data.${index}.value`, setFieldValue, editMode) 
                                                     }
                                                 </div>
                                         );
@@ -95,8 +98,8 @@ export default function({ userProfile, onSave } : SectionProps) : JSX.Element {
                         
                         {
                             editMode && <StyledButtonSection>
-                                            <button type="Submit"> Save </button>
-                                            <button 
+                                            <Button type="Submit"> Save </Button>
+                                            <Button 
                                                 onClick= { 
                                                     () => {
                                                         resetForm();
@@ -105,7 +108,7 @@ export default function({ userProfile, onSave } : SectionProps) : JSX.Element {
                                                 }
                                             > 
                                                 Cancel 
-                                            </button>
+                                            </Button>
                                         </StyledButtonSection>
                         }
                     </form>
@@ -113,4 +116,40 @@ export default function({ userProfile, onSave } : SectionProps) : JSX.Element {
             }
         </Formik>       
     );
+
+}
+
+function getFieldComponent({ value, name, label, type}, fieldName, setFieldValue, editMode) : JSX.Element {
+
+    switch(type) {
+        case FieldType.DROPDOWN:
+            if(!editMode) {
+                return <div className="profile__fieldvalue"> {(value as Lookup)?.label} </div>
+            }
+            return <Dropdown 
+                        isAsync={true} 
+                        groupId={name} 
+                        value={value?.code} 
+                        onChange={
+                            option => setFieldValue(fieldName,option)                            
+                        }
+                        />
+                            
+        default:
+            if(!editMode) {
+                return <div className="profile__fieldvalue"> {value} </div>
+            }
+            return (
+                <Input 
+                    value={value} 
+                    onChange= { 
+                        (e, { value }) => {
+                            setFieldValue(fieldName, value);
+                        }
+                    }
+                    type='text'
+                />
+            );
+    }
+
 }

@@ -94,7 +94,15 @@ export default function(props) {
                                             <Menu.Item
                                                 name='logout'                                                                                              
                                                 >                                               
-                                                <StyledLinkHovered onClick={() => setUsername(null)}> Log out </StyledLinkHovered>
+                                                <StyledLinkHovered 
+                                                    onClick={
+                                                        () => {
+                                                            setUsername(null);
+                                                            history.push('/');
+                                                        }
+                                                    }> 
+                                                    Log out 
+                                                </StyledLinkHovered>
                                             </Menu.Item>
                                          </Menu>
                                     </Popup>                               
@@ -151,8 +159,8 @@ export default function(props) {
 
                 {
                     isLoginPopupVisible &&  <ModalWithLogin
-                        callback={({email}) => {
-                            setUsername(email);
+                        callback={({username}) => {
+                            setUsername(username);
                             setLoginPopupVisibility(false);
                             history.push("/");
                         }}

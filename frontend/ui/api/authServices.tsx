@@ -1,8 +1,8 @@
 import axios, {AxiosPromise} from 'axios';
 
 const AuthServices : AuthServicesInterface = {
-    login: ({email, password}) => {
-        return axios.post("/user/authenticate", {email, password});
+    login: ({username, password}) => {
+        return axios.post("/user/authenticate", {username, password});
     },
     signup: ({email, username, password}) => {
         return axios.post("/user/register",{email, username, password} )
@@ -14,6 +14,6 @@ const AuthServices : AuthServicesInterface = {
 export default AuthServices;
 
 export interface AuthServicesInterface {
-    login({email, password}:{email:string, password:string}) : AxiosPromise<void>,
+    login({username, password}:{username:string, password:string}) : AxiosPromise<void>,
     signup({email, username, password}:{email:string, username:string, password:string}) : AxiosPromise<void>
 }
