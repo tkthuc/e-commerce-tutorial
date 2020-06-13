@@ -60,7 +60,7 @@ export default function(props : IProductProps) {
     return (
         <div className="product-page">
             <div className="product-image">
-                <img src={`products/image/${props.picture}`} alt="Image stored here"></img>
+                <img src={getPictureSrc(props.picture)} alt="Image stored here"></img>
             </div>
 
             <div className="product-details">
@@ -99,5 +99,12 @@ export default function(props : IProductProps) {
             </div>
         </div>
     )
+}
+
+function getPictureSrc(imageName:string) : string{
+    if(imageName.indexOf("http") == 0) {
+        return imageName;
+    }
+    return `products/image/${imageName}`;
 }
 

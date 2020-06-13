@@ -37,6 +37,8 @@ public class ErrorAdvice {
             Method errorDetailMethod = ReflectionUtils
                     .findMethod(exception.getClass(), errorStatus.errorDetailMethod());
             errorDetail = ReflectionUtils.invokeMethod(errorDetailMethod, exception);
+        } else {
+            return new Error.Builder().withErrorSummary("Internal errors. Please check the logs").withStatus(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
 
         LocalizedMessage localizedErrorSummary  = messageLocalizer.getLocalized(request.getLocale(), errorStatus.bundle(), errorStatus.errorCode(),errorStatus.errorSummary());

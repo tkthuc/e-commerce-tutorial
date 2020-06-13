@@ -3,6 +3,8 @@ package com.bookstore.productsevice;
 import com.bookstore.productsevice.model.Book;
 import com.bookstore.productsevice.repository.BookRepository;
 import com.bookstore.productsevice.security.Secret;
+import com.thedeanda.lorem.Lorem;
+import com.thedeanda.lorem.LoremIpsum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,63 +97,26 @@ public class BookServiceApplication {
         return new CommandLineRunner() {
             @Override
             public void run(String... args) throws Exception {
-                Book bookA = new Book.Builder().setName("Lord of the Rings")
-                        .setAuthors(new String[]{"John Doo"})
-                        .setPriceUsd(100)
-                        .setDescription("Great adventures of little hobbit")
-                        .setPicture("air-plant.jpg")
-                        .setCategories(new String[]{"fiction"})
-                        .setRating(5)
-                        .build();
-                repository.findAllByName(bookA.getName()).forEach(
-                        book -> {
-                            repository.delete(book);
-                        }
-                );
-                repository.save(bookA);
-                Book bookB = new Book.Builder()
-                        .setName("God Father")
-                        .setAuthors(new String[]{"Mario Puzo"})
-                        .setPriceUsd(150)
-                        .setPicture("barista-kit.jpg")
-                        .setDescription("The tragic life of the mafia bosses")
-                        .setCategories(new String[]{"fiction"})
-                        .setRating(8)
-                        .build();
-                repository.findAllByName(bookB.getName()).forEach(
-                        book -> {
-                            repository.delete(book);
-                        }
-                );
-                repository.save(bookB);
-                Book bookC = new Book.Builder()
-                        .setName("Art of Wars")
-                        .setAuthors(new String[]{"Sun Zhu"})
-                        .setDescription("How to create wars and win them")
-                        .setPriceUsd(40.5)
-                        .setPicture("camera-lens.jpg")
-                        .setRating(3)
-                        .setCategories(new String[]{"non-fiction"}).build();
-                repository.findAllByName(bookC.getName()).forEach(
-                        book -> {
-                            repository.delete(book);
-                        }
-                );
-                repository.save(bookC);
-                Book bookD = new Book.Builder().setName("Fundamentals of Business")
-                        .setAuthors(new String[]{"Michael Scott"})
-                        .setPriceUsd(45)
-                        .setDescription("Biography of world's best boss")
-                        .setPicture("film-camera.jpg")
-                        .setCategories(new String[]{"fiction"})
-                        .setRating(2)
-                        .build();
-                repository.findAllByName(bookD.getName()).forEach(
-                        book -> {
-                            repository.delete(book);
-                        }
-                );
-                repository.save(bookD);
+
+                Lorem lorem = LoremIpsum.getInstance();
+
+                String[] categories = new String[] { "fiction", "non-fiction", "autobiography", "detective", "science"};
+
+                repository.deleteAll();
+
+                for(int i = 1; i <= 18; i++) {
+
+                    Book book = new Book.Builder()
+                                    .setName( lorem.getWords(4,6))
+                                    .setAuthors(new String[] { lorem.getName(), lorem.getName()})
+                                    .setDescription(lorem.getWords(10,20))
+                                    .setCategories(new String[] { categories[(int)Math.random()*5]})
+                                    .setRating(Math.random()*10)
+                                    .setPriceUsd((double)Math.round(100*Math.random())/100)
+                                    .setPicture("https://picsum.photos/200/300?id="+(int)(100*Math.random()))
+                                    .build();
+                    repository.save(book);
+                }
             }
         };
 

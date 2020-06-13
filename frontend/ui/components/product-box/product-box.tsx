@@ -35,6 +35,13 @@ export default class ProductBox extends React.Component<Props,  Readonly<State>>
         })
     }
 
+    getPictureSrc(imageName:string) {
+        if(imageName.indexOf("http") == 0) {
+            return imageName;
+        }
+        return `products/image/${imageName}`;
+    }
+
     openProduct() {
         this.props.openProduct ? this.props.openProduct(this.props.name) :null ;
     }
@@ -44,7 +51,7 @@ export default class ProductBox extends React.Component<Props,  Readonly<State>>
         return (
 
             <Card className="product-box">
-                <Image onClick={this.openProduct.bind(this)} className="item-image" src={`products/image/${this.props.picture}`}/>
+                <Image onClick={this.openProduct.bind(this)} className="item-image" src={ this.getPictureSrc(this.props.picture) }/>
                 <Card.Content>
                     <Card.Header>{this.props.name}</Card.Header>
                     <Card.Description>

@@ -45,7 +45,8 @@ public class BookController {
     }
 
     @GetMapping("/products")
-    public ResponseEntity<List<Book>> getBooks(@RequestParam int page, @RequestParam int limit) {
+    public ResponseEntity<List<Book>> getBooks(@RequestParam (required = false) Integer page, @RequestParam (required = false) Integer limit) {
+        //TODO: add pagination
         List<Book> books = bookRepository.findAll();
         return new ResponseEntity<>(books, HttpStatus.OK);
     }
