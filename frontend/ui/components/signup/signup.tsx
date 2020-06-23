@@ -7,7 +7,7 @@ import './signup.css';
 
 import styled from 'styled-components';
 
-import withToasterContainer, { ToastLevel } from '../../components/toast/toast';
+import withToasterContainer, { ToastLevel } from '../toast/toast';
 
 import { validateEmail, validatePassword } from './validate';
 

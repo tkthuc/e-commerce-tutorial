@@ -8,9 +8,12 @@ var endpoints = require('../consul/serviceLocation');
 
 router.get('/', async function(req, res, next){
     try {
-        let listOfProducts = await axios.get(
-                            `${endpoints.getServiceLocationPath('product-service')}/products`,
-                             );
+        let url = `${endpoints.getServiceLocationPath('product-service')}/products`;
+        const { page, limit } = req.query;
+        if(page && limit) {
+            url += `?page=${page}&&limit=${limit}`;
+        }
+        let listOfProducts = await axios.get(url);
         res.send(listOfProducts.data);
     } catch (e) {
         next(e);

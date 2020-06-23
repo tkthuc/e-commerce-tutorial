@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { Formik, Field, FieldArray } from 'formik';
 import { FieldType, UserSection } from '../../../api/user-type';
-import Dropdown from '../../../components/dropdown/dropdown';
+import Dropdown from '../../dropdown/dropdown';
 import { Lookup } from 'api/lookupServices';
 import { Input, Button } from 'semantic-ui-react';
 

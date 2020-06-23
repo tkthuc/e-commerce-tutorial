@@ -20,7 +20,13 @@ export const BookServices : IBookServices  ={
             `/products/${id}`,
             { headers: {"Authorization" : `Bearer ${token}`} }
         ) as AxiosPromise;
+    },
+
+    getBooksAtPage(pageIndex: number, limit: number): Promise<{ data: Book[]}> {
+        return axios.get(`/products?page=${pageIndex}&limit=${limit}`);
     }
+
+    
 
 
 
