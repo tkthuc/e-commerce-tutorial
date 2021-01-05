@@ -11,7 +11,7 @@
     "debug-production": "NODE_ENV=production nodemon --inspect-brk=0.0.0.0:9229 ./bin/www"
   },
   "dependencies": {
-    "axios": "0.19.2",
+    "axios": "0.21.1",
     "consul": "0.34.1",
     "cookie-parser": "1.4.4",
     "debug": "~2.6.9",
